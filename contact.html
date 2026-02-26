@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SmartTax · Contact Us</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background: #f8fafc; color: #1e293b; line-height: 1.5; min-height: 100vh; padding: 10px; }
+    :root { --primary: #0f2b3c; --primary-dark: #0a1e2a; --secondary: #2d7a6e; --accent: #eab308; --gray-100: #f1f5f9; --gray-200: #e2e8f0; --gray-600: #475569; --gray-800: #1e293b; }
+    .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: clamp(20px, 5vw, 40px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); overflow: hidden; width: 100%; }
+    
+    /* Navigation - same as before */
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; border-bottom: 1px solid var(--gray-200); flex-wrap: wrap; gap: 1rem; }
+    @media (min-width: 1024px) { .navbar { padding: 1.5rem 4rem; } }
+    .logo h1 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: var(--primary); margin-bottom: 0.2rem; }
+    .logo h3 { font-size: clamp(0.7rem, 2.5vw, 0.9rem); font-weight: 400; color: var(--gray-600); line-height: 1.4; }
+    .nav-links { display: flex; gap: clamp(0.8rem, 2vw, 2.5rem); align-items: center; flex-wrap: wrap; width: 100%; justify-content: flex-start; }
+    @media (min-width: 768px) { .nav-links { width: auto; justify-content: flex-end; } }
+    .nav-links a { text-decoration: none; color: var(--gray-600); font-weight: 500; font-size: clamp(0.8rem, 2.2vw, 1rem); padding: 0.5rem 0; white-space: nowrap; }
+    .nav-links a:hover { color: var(--secondary); }
+    
+    /* Dropdown styles */
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-trigger { color: var(--gray-600); font-weight: 500; cursor: pointer; padding: 0.5rem 0; display: flex; align-items: center; gap: 0.3rem; font-size: clamp(0.8rem, 2.2vw, 1rem); white-space: nowrap; }
+    .nav-dropdown-trigger:hover { color: var(--secondary); }
+    .nav-dropdown-trigger .arrow { font-size: 0.7rem; transition: transform 0.3s; }
+    .nav-dropdown.active .nav-dropdown-trigger .arrow { transform: rotate(180deg); }
+    .nav-dropdown-menu { position: absolute; top: 150%; left: 50%; transform: translateX(-50%); background: white; border-radius: 16px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2); min-width: 220px; max-width: 90vw; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 1000; border: 1px solid var(--gray-200); padding: 0.5rem; }
+    @media (max-width: 768px) { .nav-dropdown-menu { left: 0; transform: none; } }
+    .nav-dropdown.active .nav-dropdown-menu { opacity: 1; visibility: visible; }
+    .nav-dropdown-item { padding: 0.8rem 1rem; cursor: pointer; border-radius: 12px; display: flex; align-items: center; gap: 0.8rem; text-decoration: none; color: inherit; }
+    .nav-dropdown-item:hover { background: #f0f9f6; }
+    .nav-dropdown-icon { font-size: 1.3rem; }
+    .nav-dropdown-content h4 { margin-bottom: 0.2rem; font-size: 0.9rem; color: var(--primary); }
+    .nav-dropdown-content p { font-size: 0.75rem; color: var(--gray-600); margin: 0; }
+    
+    /* Page Header */
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem); text-align: left; }
+    .page-header h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem; }
+    .page-header p { font-size: clamp(0.9rem, 2.5vw, 1.2rem); color: #e2e8f0; }
+    .back-link { display: inline-block; margin-bottom: 1.5rem; color: var(--secondary); text-decoration: none; font-weight: 600; font-size: clamp(0.85rem, 2.2vw, 1rem); padding: 0.5rem 0; min-height: 44px; }
+    
+    .content { padding: clamp(1.5rem, 4vw, 4rem); }
+    
+    /* Contact Section - Fully Responsive */
+    .contact-section { max-width: 1200px; margin: 0 auto; width: 100%; }
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: clamp(2rem, 4vw, 4rem); }
+    @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+    
+    .contact-info { background: var(--gray-100); border-radius: 30px; padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid var(--gray-200); width: 100%; }
+    .contact-info h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--primary); margin-bottom: 1.5rem; }
+    .contact-info > p { margin-bottom: 1.5rem; color: var(--gray-600); }
+    
+    .contact-details { margin-top: 1.5rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: white; border-radius: 20px; box-shadow: 0 5px 15px -5px rgba(0,0,0,0.1); transition: transform 0.3s; flex-wrap: wrap; }
+    @media (max-width: 480px) { .contact-item { flex-direction: column; align-items: flex-start; } }
+    .contact-item:hover { transform: translateX(10px); }
+    .contact-icon { width: 45px; height: 45px; background: var(--secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .contact-text { flex: 1; min-width: 200px; }
+    .contact-text h4 { color: var(--primary); margin-bottom: 0.3rem; font-size: 1.1rem; }
+    .contact-text a, .contact-text p { color: var(--gray-600); text-decoration: none; font-size: clamp(0.9rem, 2.2vw, 1rem); word-break: break-word; }
+    
+    .business-hours { background: white; border-radius: 20px; padding: 1.5rem; margin-top: 2rem; }
+    .business-hours h4 { color: var(--primary); margin-bottom: 1rem; }
+    .business-hours p { display: flex; justify-content: space-between; color: var(--gray-600); margin-bottom: 0.5rem; flex-wrap: wrap; gap: 0.5rem; }
+    .business-hours span { font-weight: 600; color: var(--secondary); }
+    
+    /* Contact Form */
+    .contact-form { background: white; border-radius: 30px; padding: clamp(1.5rem, 4vw, 3rem); border: 2px solid var(--gray-200); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1); width: 100%; }
+    .contact-form h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--primary); margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; margin-bottom: 0.4rem; color: var(--primary); font-weight: 600; font-size: clamp(0.85rem, 2.2vw, 1rem); }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1rem; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 1rem; transition: all 0.3s; font-size: clamp(0.9rem, 2.5vw, 1rem); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--secondary); outline: none; }
+    .form-row { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 480px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    .submit-btn { background: var(--secondary); color: white; border: none; padding: 1rem; border-radius: 50px; font-weight: 600; font-size: clamp(0.95rem, 2.5vw, 1.1rem); cursor: pointer; width: 100%; transition: all 0.3s; min-height: 50px; }
+    .submit-btn:hover { background: var(--primary); transform: translateY(-2px); }
+    .success-message { background: #10b981; color: white; padding: 1rem; border-radius: 12px; margin-top: 1rem; text-align: center; }
+    .hide { display: none; }
+    
+    /* Map Section */
+    .map-section { margin-top: 3rem; background: var(--gray-100); border-radius: 30px; padding: clamp(1.5rem, 4vw, 3rem); text-align: center; width: 100%; }
+    .map-section h3 { font-size: clamp(1.5rem, 4vw, 2rem); color: var(--primary); margin-bottom: 1.5rem; }
+    .map-placeholder { background: white; border-radius: 20px; padding: 2rem; border: 2px dashed var(--secondary); color: var(--gray-600); }
+    .map-placeholder p { margin-bottom: 0.8rem; word-break: break-word; }
+    
+    /* Footer */
+    .footer { background: var(--primary-dark); color: white; padding: clamp(2rem, 5vw, 3rem); text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: clamp(1rem, 3vw, 2rem); margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: white; text-decoration: none; opacity: 0.8; font-size: clamp(0.8rem, 2.2vw, 1rem); padding: 0.5rem; min-height: 44px; display: inline-flex; align-items: center; }
+    .footer-links a:hover { opacity: 1; color: var(--accent); }
+    .footer p { font-size: clamp(0.8rem, 2vw, 0.9rem); }
+    
+    @media (max-width: 768px) { .nav-links { justify-content: flex-start; overflow-x: auto; padding-bottom: 0.5rem; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="logo">
+        <h1>SarvaTax</h1>
+        <h3>Driven by fresh thinking, backed by practical experience</h3>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <div class="nav-dropdown" id="filingDropdown">
+          <div class="nav-dropdown-trigger">Filing Services <span class="arrow">▼</span></div>
+          <div class="nav-dropdown-menu">
+            <a href="filing-services.html?service=itr" class="nav-dropdown-item">
+              <span class="nav-dropdown-icon">📊</span>
+              <div class="nav-dropdown-content"><h4>ITR Filing</h4><p>Income Tax Return</p></div>
+            </a>
+            <a href="filing-services.html?service=gst" class="nav-dropdown-item">
+              <span class="nav-dropdown-icon">📦</span>
+              <div class="nav-dropdown-content"><h4>GST Filing</h4><p>GST for businesses</p></div>
+            </a>
+          </div>
+        </div>
+        <a href="support.html">Consulting</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <a href="index.html" class="back-link">← Back to Home</a>
+      <h1>Contact Us</h1>
+      <p>Get in touch with our tax experts</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="contact-section">
+        <div class="contact-grid">
+          <!-- Contact Info -->
+          <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Have questions about taxes? Need expert advice? We're here to help!</p>
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-text"><h4>Email</h4><a href="mailto:nandeesh@yukthi.co.in">nandeesh@yukthi.co.in</a></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div class="contact-text"><h4>Phone</h4><a href="tel:+918217726457">+91 82177 26457</a></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-text"><h4>Office</h4><p>Mumbai · Bangalore · Delhi (Virtual)</p></div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">⏰</div>
+                <div class="contact-text"><h4>Response Time</h4><p>Within 4 hours</p></div>
+              </div>
+            </div>
+            <div class="business-hours">
+              <h4>Business Hours</h4>
+              <p>Monday - Friday <span>9:00 AM - 8:00 PM</span></p>
+              <p>Saturday <span>10:00 AM - 4:00 PM</span></p>
+              <p>Sunday <span>Closed</span></p>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form">
+            <h2>Send a Message</h2>
+            <form id="contactForm" onsubmit="submitContactForm(event)">
+              <div class="form-row">
+                <div class="form-group"><label>First Name *</label><input type="text" id="firstName" placeholder="John" required></div>
+                <div class="form-group"><label>Last Name</label><input type="text" id="lastName" placeholder="Doe"></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group"><label>Email *</label><input type="email" id="contactEmail" placeholder="john@example.com" required></div>
+                <div class="form-group"><label>Phone *</label><input type="tel" id="contactPhone" placeholder="98765 43210" required></div>
+              </div>
+              <div class="form-group"><label>Subject *</label>
+                <select id="contactSubject" required>
+                  <option value="">Select a subject</option>
+                  <option value="itr">ITR Filing Query</option>
+                  <option value="gst">GST Filing Query</option>
+                  <option value="support">Support Services</option>
+                  <option value="general">General Inquiry</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Message *</label><textarea id="contactMessage" rows="4" placeholder="How can we help you?" required></textarea></div>
+              <button type="submit" class="submit-btn">Send Message</button>
+              <div id="contactSuccess" class="success-message hide">✓ Thank you! We'll respond within 4 hours.</div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="map-section">
+          <h3>Visit Us</h3>
+          <div class="map-placeholder">
+            <p>📍 We're available virtually across India</p>
+            <p>Main Office: Bangalore | Virtual: Karnataka</p>
+            <p style="color: var(--secondary);">Schedule a video consultation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="filing-services.html?service=itr">ITR Filing</a>
+        <a href="filing-services.html?service=gst">GST Filing</a>
+        <a href="support.html">Consulting</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <p>© 2026 SarvaTax. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Dropdown hover
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdown = document.getElementById('filingDropdown');
+      const menu = dropdown.querySelector('.nav-dropdown-menu');
+      let timeoutId;
+      if (dropdown) {
+        dropdown.addEventListener('mouseenter', function() { clearTimeout(timeoutId); this.classList.add('active'); });
+        dropdown.addEventListener('mouseleave', function() { timeoutId = setTimeout(() => this.classList.remove('active'), 500); });
+        menu.addEventListener('mouseenter', () => clearTimeout(timeoutId));
+        menu.addEventListener('mouseleave', () => timeoutId = setTimeout(() => dropdown.classList.remove('active'), 500));
+        dropdown.addEventListener('touchstart', function(e) { e.preventDefault(); this.classList.toggle('active'); });
+      }
+    });
+
+    // Contact form
+    function submitContactForm(event) {
+      event.preventDefault();
+      const data = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('contactEmail').value,
+        phone: document.getElementById('contactPhone').value,
+        subject: document.getElementById('contactSubject').value,
+        message: document.getElementById('contactMessage').value,
+        timestamp: new Date().toLocaleString()
+      };
+      console.log('Contact:', data);
+      const el = document.getElementById('contactSuccess');
+      el.classList.remove('hide');
+      document.getElementById('contactForm').reset();
+      setTimeout(() => el.classList.add('hide'), 5000);
+    }
+  </script>
+</body>
+</html>

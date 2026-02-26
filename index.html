@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SmartTax · Professional Tax Advisory</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 10px;
+    }
+
+    :root {
+      --primary: #0f2b3c;
+      --primary-dark: #0a1e2a;
+      --secondary: #2d7a6e;
+      --accent: #eab308;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: clamp(20px, 5vw, 40px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* Navigation - Fully Responsive */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+      .navbar {
+        padding: 1.5rem 4rem;
+      }
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    @media (min-width: 768px) {
+      .logo {
+        width: auto;
+      }
+    }
+
+    .logo__title {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.2rem;
+    }
+
+    .logo__subtitle {
+      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+      font-weight: 400;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(1rem, 3vw, 2.5rem);
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        width: auto;
+        justify-content: flex-end;
+      }
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-weight: 500;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      transition: color 0.3s;
+      padding: 0.5rem 0;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary);
+    }
+
+    /* Hover Dropdown Menu - Responsive */
+    .nav-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .nav-dropdown__trigger {
+      color: var(--gray-600);
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      white-space: nowrap;
+    }
+
+    .nav-dropdown__trigger:hover {
+      color: var(--secondary);
+    }
+
+    .nav-dropdown__trigger .arrow {
+      font-size: 0.7rem;
+      transition: transform 0.3s;
+    }
+
+    .nav-dropdown.active .nav-dropdown__trigger .arrow {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown__menu {
+      position: absolute;
+      top: 150%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+      min-width: 250px;
+      width: max-content;
+      max-width: 90vw;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      padding: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-dropdown__menu {
+        left: 0;
+        transform: none;
+        min-width: 200px;
+      }
+    }
+
+    .nav-dropdown.active .nav-dropdown__menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-dropdown-item {
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-dropdown-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .nav-dropdown-item:hover {
+      background: #f0f9f6;
+    }
+
+    .nav-dropdown-item__icon {
+      font-size: 1.3rem;
+    }
+
+    .nav-dropdown-item__content h4 {
+      margin-bottom: 0.2rem;
+      font-size: 0.95rem;
+      color: var(--primary);
+    }
+
+    .nav-dropdown-item__content p {
+      font-size: 0.75rem;
+      color: var(--gray-600);
+      margin: 0;
+    }
+
+    /* Hero Section - Fully Responsive */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__content {
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .hero__title {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      word-break: break-word;
+    }
+
+    .hero__title span {
+      color: var(--accent);
+      display: block;
+      font-size: clamp(1.3rem, 4vw, 2.5rem);
+      margin-top: 0.5rem;
+    }
+
+    .hero__description {
+      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      line-height: 1.6;
+      color: #e2e8f0;
+      max-width: 800px;
+      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      border-left: 4px solid var(--accent);
+      width: 100%;
+    }
+
+    .hero__description p {
+      margin-bottom: 0.8rem;
+    }
+
+    .hero__stats {
+      display: flex;
+      gap: clamp(1rem, 3vw, 3rem);
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero__stat {
+      flex: 1 1 auto;
+      min-width: 120px;
+    }
+
+    @media (max-width: 480px) {
+      .hero__stat {
+        min-width: 100%;
+      }
+    }
+
+    .hero__stat-value {
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hero__stat-label {
+      color: #e2e8f0;
+      font-size: clamp(0.75rem, 2vw, 1rem);
+    }
+
+    /* Services Section - Fully Responsive */
+    .services {
+      padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+      background: white;
+      width: 100%;
+    }
+
+    .services__header {
+      text-align: center;
+      margin-bottom: clamp(2rem, 4vw, 4rem);
+      width: 100%;
+    }
+
+    .services__title {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .services__subtitle {
+      color: var(--gray-600);
+      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: clamp(1rem, 3vw, 2.5rem);
+      width: 100%;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 24px;
+      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.2rem, 2.5vw, 2rem);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--gray-200);
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+    }
+
+    .service-card__icon {
+      font-size: clamp(2.2rem, 5vw, 3rem);
+      margin-bottom: 1.2rem;
+    }
+
+    .service-card__title {
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .service-card__description {
+      color: var(--gray-600);
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+    }
+
+    .service-card__price {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 600;
+      color: var(--secondary);
+      margin: 1rem 0 0.8rem;
+      padding: 0.5rem 0;
+      border-top: 2px dashed var(--gray-200);
+      border-bottom: 2px dashed var(--gray-200);
+      word-break: break-word;
+    }
+
+    .service-card__button {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      margin-top: 1.2rem;
+      transition: background 0.3s;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+    }
+
+    /* About Section - Fully Responsive */
+    .about {
+      padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem);
+      background: var(--gray-100);
+      border-top: 1px solid var(--gray-200);
+      border-bottom: 1px solid var(--gray-200);
+      width: 100%;
+    }
+
+    .about__content {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+      width: 100%;
+    }
+
+    .about__title {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .about__text,
+    .about__mission {
+      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      color: var(--gray-800);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .about__stats {
+      display: flex;
+      justify-content: center;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .about__stat-item {
+      text-align: center;
+      min-width: 100px;
+      flex: 1 1 auto;
+    }
+
+    @media (max-width: 480px) {
+      .about__stat-item {
+        min-width: 100%;
+      }
+    }
+
+    .about__stat-number {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .about__stat-label {
+      color: var(--gray-600);
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Footer - Fully Responsive */
+    .footer {
+      background: var(--primary-dark);
+      color: white;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem);
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer__title {
+      font-size: clamp(1.6rem, 4vw, 2rem);
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .footer__description {
+      font-size: clamp(0.85rem, 2.2vw, 1.1rem);
+      color: #e2e8f0;
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.7;
+      padding: 0 1rem;
+    }
+
+    .footer__contact {
+      margin-top: 1rem;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 480px) {
+      .footer__contact {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+
+    .footer__contact-link {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .footer__copyright {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      font-size: clamp(0.75rem, 2vw, 0.9rem);
+    }
+
+    /* Touch-friendly improvements */
+    button,
+    a,
+    .plan-header,
+    .nav-dropdown__trigger {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 44px;
+      /* Better touch target */
+      display: inline-flex;
+      align-items: center;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .hero__stats {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .hero__stat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+      }
+
+      .service-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 5px;
+      }
+
+      .nav-links {
+        gap: 0.8rem;
+      }
+
+      .nav-link,
+      .nav-dropdown__trigger {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="main-container">
+    <!-- Navigation -->
+    <nav class="navbar" id="main-navigation">
+      <div class="logo" id="site-logo">
+        <h1 class="logo__title" id="logo-title">SarvaTax</h1>
+        <h3 class="logo__subtitle" id="logo-subtitle">Driven by fresh thinking, backed by practical experience</h3>
+      </div>
+
+      <div class="nav-links" id="nav-links-container">
+        <a href="index.html" class="nav-link" id="nav-home">Home</a>
+
+        <!-- Hover Dropdown Menu -->
+        <div class="nav-dropdown" id="filing-dropdown">
+          <div class="nav-dropdown__trigger" id="filing-dropdown-trigger">
+            Filing Services <span class="arrow" id="filing-dropdown-arrow">▼</span>
+          </div>
+          <div class="nav-dropdown__menu" id="filing-dropdown-menu">
+            <a href="filing-services.html?service=itr" class="nav-dropdown-item" id="dropdown-itr">
+              <span class="nav-dropdown-item__icon" id="dropdown-itr-icon">📊</span>
+              <div class="nav-dropdown-item__content" id="dropdown-itr-content">
+                <h4 id="dropdown-itr-title">ITR Filing</h4>
+                <p id="dropdown-itr-desc">Income Tax Return</p>
+              </div>
+            </a>
+            <a href="filing-services.html?service=gst" class="nav-dropdown-item" id="dropdown-gst">
+              <span class="nav-dropdown-item__icon" id="dropdown-gst-icon">📦</span>
+              <div class="nav-dropdown-item__content" id="dropdown-gst-content">
+                <h4 id="dropdown-gst-title">GST Filing</h4>
+                <p id="dropdown-gst-desc">GST for businesses</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="support.html" class="nav-link" id="nav-support">Consulting</a>
+        <a href="contact.html" class="nav-link" id="nav-contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero-section">
+      <div class="hero__content" id="hero-content">
+        <h1 class="hero__title" id="hero-title">
+          Professional Tax Solutions
+          <span id="hero-title-span">For Individuals & Businesses</span>
+        </h1>
+
+        <div class="hero__description" id="hero-description">
+          <p id="hero-description-p1">
+            <strong>Expert tax professionals provide comprehensive services in GST, TDS and IT,</strong>
+            focusing on compliance, strategic planning and litigation support.
+          </p>
+          <p id="hero-description-p2">
+            Services include GST registration and filing, ITR computation and filing for individuals
+            and corporates across different industries.
+          </p>
+        </div>
+
+        <div class="hero__stats" id="hero-stats">
+          <div class="hero__stat" id="hero-stat-1">
+            <div class="hero__stat-value" id="hero-stat-value-1">15+</div>
+            <div class="hero__stat-label" id="hero-stat-label-1">Years Experience</div>
+          </div>
+          <div class="hero__stat" id="hero-stat-2">
+            <div class="hero__stat-value" id="hero-stat-value-2">10K+</div>
+            <div class="hero__stat-label" id="hero-stat-label-2">Clients Served</div>
+          </div>
+          <div class="hero__stat" id="hero-stat-3">
+            <div class="hero__stat-value" id="hero-stat-value-3">4.9★</div>
+            <div class="hero__stat-label" id="hero-stat-label-3">Client Rating</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services-section">
+      <div class="services__header" id="services-header">
+        <h2 class="services__title" id="services-title">Our Services</h2>
+        <p class="services__subtitle" id="services-subtitle">Comprehensive tax solutions tailored to your needs</p>
+      </div>
+
+      <div class="services__grid" id="services-grid">
+        <!-- ITR Filing Card -->
+        <a href="filing-services.html?service=itr" class="service-card" id="service-card-itr">
+          <div class="service-card__icon" id="service-card-itr-icon">📊</div>
+          <h3 class="service-card__title" id="service-card-itr-title">ITR Filing</h3>
+          <p class="service-card__description" id="service-card-itr-desc">Fast & accurate income tax returns for
+            individuals, businesses, and professionals.</p>
+          <div class="service-card__price" id="service-card-itr-price">Fees at 0.05% of Total Income</div>
+          <div class="service-card__button" id="service-card-itr-btn">View Plans →</div>
+        </a>
+
+        <!-- GST Filing Card -->
+        <a href="filing-services.html?service=gst" class="service-card" id="service-card-gst">
+          <div class="service-card__icon" id="service-card-gst-icon">📦</div>
+          <h3 class="service-card__title" id="service-card-gst-title">GST Filing</h3>
+          <p class="service-card__description" id="service-card-gst-desc">Complete GST compliance including
+            registration, monthly/quarterly returns, and consulting.</p>
+          <div class="service-card__price" id="service-card-gst-price">Starting ₹999/month</div>
+          <div class="service-card__button" id="service-card-gst-btn">View Plans →</div>
+        </a>
+
+        <!-- Support Services Card -->
+        <a href="support.html" class="service-card" id="service-card-support">
+          <div class="service-card__icon" id="service-card-support-icon">⚙️</div>
+          <h3 class="service-card__title" id="service-card-support-title">Support Services</h3>
+          <p class="service-card__description" id="service-card-support-desc">Expert assistance with notices, TDS
+            corrections, annual support, and portal help.</p>
+          <div class="service-card__price" id="service-card-support-price">Starting ₹299</div>
+          <div class="service-card__button" id="service-card-support-btn">View Plans →</div>
+        </a>
+        <!-- Add this new plan card for HUF/Trust -->
+        
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about-section">
+      <div class="about__content" id="about-content">
+        <h2 class="about__title" id="about-title">Who We Are</h2>
+        <p class="about__text" id="about-text-1">
+          We are a team of young, skilled professionals committed to delivering high-quality
+          financial and taxation services. Our expertise spans across income tax, GST, TDS,
+          and corporate compliance.
+        </p>
+        <p class="about__mission" id="about-mission">
+          <strong>Our mission:</strong> To simplify taxation and provide strategic financial
+          solutions that help our clients save money and stay compliant.
+        </p>
+
+        <div class="about__stats" id="about-stats">
+          <div class="about__stat-item" id="about-stat-1">
+            <div class="about__stat-number" id="about-stat-number-1">500+</div>
+            <div class="about__stat-label" id="about-stat-label-1">ITR Filed</div>
+          </div>
+          <div class="about__stat-item" id="about-stat-2">
+            <div class="about__stat-number" id="about-stat-number-2">200+</div>
+            <div class="about__stat-label" id="about-stat-label-2">GST Clients</div>
+          </div>
+          <div class="about__stat-item" id="about-stat-3">
+            <div class="about__stat-number" id="about-stat-number-3">50+</div>
+            <div class="about__stat-label" id="about-stat-label-3">Notices Handled</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="main-footer">
+      <h2 class="footer__title" id="footer-title">SarvaTax</h2>
+      <p class="footer__description" id="footer-description">
+        Driven by fresh thinking, backed by practical experience. We provide comprehensive
+        financial and taxation services with accuracy, integrity, and professionalism.
+      </p>
+      <p class="footer__contact" id="footer-contact">
+        <a href="mailto:nandeesh@yukthi.co.in" class="footer__contact-link" id="footer-email">📧
+          sarvataxhelpdesk@gmail.com</a>
+        <a href="tel:+918217726457" class="footer__contact-link" id="footer-phone">📞 8217726457</a>
+      </p>
+      <div class="footer__copyright" id="footer-copyright">
+        © 2026 SarvaTax. All rights reserved.
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const dropdown = document.getElementById('filing-dropdown');
+      const menu = document.getElementById('filing-dropdown-menu');
+      let timeoutId;
+
+      if (dropdown) {
+        dropdown.addEventListener('mouseenter', function () {
+          clearTimeout(timeoutId);
+          this.classList.add('active');
+        });
+
+        dropdown.addEventListener('mouseleave', function () {
+          timeoutId = setTimeout(() => {
+            this.classList.remove('active');
+          }, 500);
+        });
+
+        menu.addEventListener('mouseenter', function () {
+          clearTimeout(timeoutId);
+        });
+
+        menu.addEventListener('mouseleave', function () {
+          timeoutId = setTimeout(() => {
+            dropdown.classList.remove('active');
+          }, 500);
+        });
+
+        // Touch support for mobile
+        dropdown.addEventListener('touchstart', function (e) {
+          e.preventDefault();
+          this.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

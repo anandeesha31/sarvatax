@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SmartTax · Filing Services</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 10px;
+    }
+
+    :root {
+      --primary: #0f2b3c;
+      --primary-dark: #0a1e2a;
+      --secondary: #2d7a6e;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: clamp(20px, 5vw, 40px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* Navigation - Fully Responsive */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+      .navbar {
+        padding: 1.5rem 4rem;
+      }
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    @media (min-width: 768px) {
+      .logo {
+        width: auto;
+      }
+    }
+
+    .logo h1 {
+      font-size: clamp(1.5rem, 4vw, 1.8rem);
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.2rem;
+    }
+
+    .logo h3 {
+      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+      font-weight: 400;
+      color: var(--gray-600);
+      line-height: 1.4;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(0.8rem, 2vw, 2.5rem);
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        width: auto;
+        justify-content: flex-end;
+      }
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-weight: 500;
+      font-size: clamp(0.8rem, 2.2vw, 1rem);
+      transition: color 0.3s;
+      padding: 0.5rem 0;
+      white-space: nowrap;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary);
+    }
+
+    /* Hover Dropdown Menu - Responsive */
+    .nav-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .nav-dropdown-trigger {
+      color: var(--gray-600);
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: clamp(0.8rem, 2.2vw, 1rem);
+      white-space: nowrap;
+      min-height: 44px;
+    }
+
+    .nav-dropdown-trigger:hover {
+      color: var(--secondary);
+    }
+
+    .nav-dropdown-trigger .arrow {
+      font-size: 0.7rem;
+      transition: transform 0.3s;
+    }
+
+    .nav-dropdown.active .nav-dropdown-trigger .arrow {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 150%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2);
+      min-width: 220px;
+      width: max-content;
+      max-width: 90vw;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+      z-index: 1000;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      padding: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-dropdown-menu {
+        left: 0;
+        transform: none;
+        min-width: 200px;
+      }
+    }
+
+    .nav-dropdown.active .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-dropdown-item {
+      padding: 0.8rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.2rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav-dropdown-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .nav-dropdown-item:hover {
+      background: #f0f9f6;
+    }
+
+    .nav-dropdown-icon {
+      font-size: 1.3rem;
+    }
+
+    .nav-dropdown-content h4 {
+      margin-bottom: 0.2rem;
+      font-size: 0.9rem;
+      color: var(--primary);
+    }
+
+    .nav-dropdown-content p {
+      font-size: 0.75rem;
+      color: var(--gray-600);
+      margin: 0;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem);
+    }
+
+    .page-header h1 {
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      margin-bottom: 0.5rem;
+      word-break: break-word;
+    }
+
+    .page-header p {
+      font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+      color: #e2e8f0;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      padding: 0.5rem 0;
+      min-height: 44px;
+    }
+
+    .content {
+      padding: clamp(1.5rem, 4vw, 4rem);
+    }
+
+    /* Service Sections */
+    .service-section {
+      display: none;
+    }
+
+    .service-section.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--secondary);
+    }
+
+    /* Plans Container */
+    .plans-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      width: 100%;
+    }
+
+    /* Plan Card - Box style for mobile */
+    .plan-card {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .plan-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .plan-header {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      flex-wrap: wrap;
+      gap: 1rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .plan-card.active .plan-header {
+      border-bottom-color: var(--secondary);
+      background: #f8fafc;
+    }
+
+    @media (max-width: 640px) {
+      .plan-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+      }
+    }
+
+    .plan-header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex: 1;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .plan-header-left {
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+
+    .plan-icon {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      width: clamp(50px, 8vw, 60px);
+      height: clamp(50px, 8vw, 60px);
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      color: white;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 6px -1px rgba(45, 122, 110, 0.2);
+    }
+
+    .plan-info {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .plan-info h3 {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+      word-break: break-word;
+      font-weight: 700;
+    }
+
+    .plan-info p {
+      color: var(--gray-600);
+      font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    .plan-price {
+      font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+      font-weight: 700;
+      color: var(--secondary);
+      margin-right: 0.5rem;
+      min-width: fit-content;
+      word-break: break-word;
+      text-align: right;
+      background: rgba(45, 122, 110, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .plan-price {
+        width: auto;
+        text-align: left;
+        align-self: flex-start;
+        margin-top: 0.5rem;
+      }
+    }
+
+    .dropdown-icon {
+      font-size: 1.2rem;
+      color: var(--secondary);
+      transition: transform 0.3s;
+      margin-left: auto;
+      min-width: 30px;
+      text-align: center;
+      background: white;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .plan-card.active .dropdown-icon {
+      transform: rotate(180deg);
+      background: var(--secondary);
+      color: white;
+    }
+
+    .plan-form {
+      display: none;
+      padding: clamp(1.5rem, 4vw, 2rem);
+      background: #f8fafc;
+      border-top: 2px solid var(--gray-200);
+    }
+
+    .plan-card.active .plan-form {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Form Styles - Fully Responsive */
+    .simple-form {
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+      width: 100%;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      font-size: 1rem;
+      -webkit-appearance: none;
+      appearance: none;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      transition: all 0.3s;
+      background: white;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 122, 110, 0.1);
+    }
+
+    .submit-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1rem;
+      transition: all 0.3s;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 50px;
+      box-shadow: 0 4px 6px -1px rgba(45, 122, 110, 0.3);
+    }
+
+    .submit-btn:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px -1px rgba(45, 122, 110, 0.4);
+    }
+
+    .success-message {
+      background: #10b981;
+      color: white;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      text-align: center;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      word-break: break-word;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .footer {
+      background: var(--primary-dark);
+      color: white;
+      padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 3rem);
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: clamp(1rem, 3vw, 2rem);
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+      font-size: clamp(0.8rem, 2.2vw, 1rem);
+      padding: 0.5rem 1rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50px;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .footer p {
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
+      opacity: 0.7;
+    }
+
+    /* Mobile-specific improvements */
+    @media (max-width: 768px) {
+      .nav-links {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.8rem;
+        -webkit-overflow-scrolling: touch;
+        gap: 1.2rem;
+      }
+      
+      .nav-link {
+        padding: 0.5rem 0.8rem;
+        background: #f1f5f9;
+        border-radius: 50px;
+      }
+      
+      .plan-price {
+        width: auto;
+        text-align: left;
+        font-size: 1.1rem;
+        padding: 0.4rem 1rem;
+      }
+      
+      .plan-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 2rem;
+      }
+      
+      .plan-info h3 {
+        font-size: 1.4rem;
+      }
+      
+      .dropdown-icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 5px;
+      }
+      
+      .plan-header {
+        padding: 1.2rem;
+      }
+      
+      .plan-header-left {
+        gap: 0.8rem;
+      }
+      
+      .plan-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.8rem;
+      }
+      
+      .plan-info h3 {
+        font-size: 1.3rem;
+      }
+      
+      .plan-info p {
+        font-size: 0.85rem;
+      }
+      
+      .form-group input,
+      .form-group select {
+        padding: 0.8rem;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      
+      .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      
+      .footer-links a {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    button, a, .plan-header, .nav-dropdown-trigger {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="filing-services-container">
+    <!-- Navigation -->
+    <nav class="navbar" id="filing-navbar">
+      <div class="logo" id="filing-logo">
+        <h1 id="filing-logo-title">SarvaTax</h1>
+        <h3 id="filing-logo-subtitle">Driven by fresh thinking, backed by practical experience</h3>
+      </div>
+      <div class="nav-links" id="filing-nav-links">
+        <a href="index.html" id="filing-nav-home" class="nav-link">Home</a>
+        
+        <div class="nav-dropdown" id="filing-nav-dropdown">
+          <div class="nav-dropdown-trigger" id="filing-nav-dropdown-trigger">
+            Filing Services <span class="arrow" id="filing-nav-dropdown-arrow">▼</span>
+          </div>
+          <div class="nav-dropdown-menu" id="filing-nav-dropdown-menu">
+            <a href="filing-services.html?service=itr" class="nav-dropdown-item" id="filing-nav-dropdown-itr">
+              <span class="nav-dropdown-icon" id="filing-nav-dropdown-itr-icon">📊</span>
+              <div class="nav-dropdown-content" id="filing-nav-dropdown-itr-content">
+                <h4 id="filing-nav-dropdown-itr-title">ITR Filing</h4>
+                <p id="filing-nav-dropdown-itr-desc">Income Tax Return</p>
+              </div>
+            </a>
+            <a href="filing-services.html?service=gst" class="nav-dropdown-item" id="filing-nav-dropdown-gst">
+              <span class="nav-dropdown-icon" id="filing-nav-dropdown-gst-icon">📦</span>
+              <div class="nav-dropdown-content" id="filing-nav-dropdown-gst-content">
+                <h4 id="filing-nav-dropdown-gst-title">GST Filing</h4>
+                <p id="filing-nav-dropdown-gst-desc">GST for businesses</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        
+        <a href="support.html" id="filing-nav-support" class="nav-link">Consulting</a>
+        <a href="contact.html" id="filing-nav-contact" class="nav-link">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header" id="filing-page-header">
+      <a href="index.html" class="back-link" id="filing-back-link">← Back to Home</a>
+      <h1 id="filing-page-title">Filing Services</h1>
+      <p id="filing-page-description">Select a service to view available plans</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content" id="filing-main-content">
+      <!-- ITR Filing Section -->
+      <div id="itr-section" class="service-section">
+        <h2 class="section-title" id="itr-section-title">Income Tax Return Plans</h2>
+        <div class="plans-container" id="itr-plans-container">
+          
+          <!-- PLAN 1: For Salaried individuals -->
+          <div class="plan-card" id="itr-plan-1">
+            <div class="plan-header" onclick="togglePlan('itr-plan-1')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="itr-plan-1-icon">👔</div>
+                <div class="plan-info" id="itr-plan-1-info">
+                  <h3 id="itr-plan-1-title">Salaried Individuals</h3>
+                  <p id="itr-plan-1-desc">Salary, house property, and other income</p>
+                </div>
+              </div>
+              <div class="plan-price" id="itr-plan-1-price">0.05% of income</div>
+              <div class="dropdown-icon" id="itr-plan-1-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="itr-plan-1-form">
+              <div class="simple-form">
+                <form id="itr-form-1" onsubmit="submitForm(event, 'itr1')">
+                  <div class="form-group">
+                    <label for="itr1-name">Full Name *</label>
+                    <input type="text" id="itr1-name" name="itr1-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr1-email">Email Address *</label>
+                    <input type="email" id="itr1-email" name="itr1-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr1-phone">Phone Number *</label>
+                    <input type="tel" id="itr1-phone" name="itr1-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr1-income">Income Range *</label>
+                    <select id="itr1-income" name="itr1-income" onchange="updatePrice1()" required>
+                      <option value="">Select your income range</option>
+                      <option value="<25">upto ₹25 lakhs</option>
+                      <option value=">25">more than ₹25 lakhs (₹1,699)</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="itr1-submit">Submit Application</button>
+                  <div id="success-itr1" class="success-message hide">
+                    ✓ Application submitted! We'll contact you within 4 hours.
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLAN 2: Capital Gains -->
+          <div class="plan-card" id="itr-plan-2">
+            <div class="plan-header" onclick="togglePlan('itr-plan-2')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="itr-plan-2-icon">📈</div>
+                <div class="plan-info" id="itr-plan-2-info">
+                  <h3 id="itr-plan-2-title">Capital Gains</h3>
+                  <p id="itr-plan-2-desc">For capital gains with other income</p>
+                </div>
+              </div>
+              <div class="plan-price" id="itr-plan-2-price">0.07% of income</div>
+              <div class="dropdown-icon" id="itr-plan-2-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="itr-plan-2-form">
+              <div class="simple-form">
+                <form id="itr-form-2" onsubmit="submitForm(event, 'itr2')">
+                  <div class="form-group">
+                    <label for="itr2-name">Full Name *</label>
+                    <input type="text" id="itr2-name" name="itr2-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr2-email">Email Address *</label>
+                    <input type="email" id="itr2-email" name="itr2-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr2-phone">Phone Number *</label>
+                    <input type="tel" id="itr2-phone" name="itr2-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr2-income">Income Range *</label>
+                    <select id="itr2-income" name="itr2-income" onchange="updatePrice2()" required>
+                      <option value="">Select your income range</option>
+                      <option value="<25">upto 25 lakhs (0.07%)</option>
+                      <option value="25-50">₹25-50 lakhs (₹2,199)</option>
+                      <option value=">50">>₹50 lakhs (₹2,999)</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="itr2-submit">Submit Application</button>
+                  <div id="success-itr2" class="success-message hide">
+                    ✓ Application submitted! We'll contact you within 4 hours.
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLAN 3: Business & Professional -->
+          <div class="plan-card" id="itr-plan-3">
+            <div class="plan-header" onclick="togglePlan('itr-plan-3')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="itr-plan-3-icon">🏢</div>
+                <div class="plan-info" id="itr-plan-3-info">
+                  <h3 id="itr-plan-3-title">Business & Professional</h3>
+                  <p id="itr-plan-3-desc">Business, presumptive and professional income</p>
+                </div>
+              </div>
+              <div class="plan-price" id="itr-plan-3-price">₹2,499</div>
+              <div class="dropdown-icon" id="itr-plan-3-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="itr-plan-3-form">
+              <div class="simple-form">
+                <form id="itr-form-3" onsubmit="submitForm(event, 'itr3')">
+                  <div class="form-group">
+                    <label for="itr3-name">Full Name *</label>
+                    <input type="text" id="itr3-name" name="itr3-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr3-email">Email Address *</label>
+                    <input type="email" id="itr3-email" name="itr3-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr3-phone">Phone Number *</label>
+                    <input type="tel" id="itr3-phone" name="itr3-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr3-business">Business Type *</label>
+                    <select id="itr3-business" name="itr3-business" required>
+                      <option value="">Select business type</option>
+                      <option value="business">Business</option>
+                      <option value="presumptive">Presumptive Taxation</option>
+                      <option value="professional">Professional</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr3-turnover">Annual Turnover *</label>
+                    <select id="itr3-turnover" name="itr3-turnover" required>
+                      <option value="">Select turnover range</option>
+                      <option value="<50l">Less than ₹50 lakhs</option>
+                      <option value="50l-2cr">₹50 lakhs - ₹2 crore</option>
+                      <option value=">2cr">More than ₹2 crore</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="itr3-submit">Submit Application</button>
+                  <div id="success-itr3" class="success-message hide">
+                    ✓ Application submitted! We'll contact you within 4 hours.
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- PLAN 4: NRI -->
+          <div class="plan-card" id="itr-plan-4">
+            <div class="plan-header" onclick="togglePlan('itr-plan-4')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="itr-plan-4-icon">🌐</div>
+                <div class="plan-info" id="itr-plan-4-info">
+                  <h3 id="itr-plan-4-title">NRI Services</h3>
+                  <p id="itr-plan-4-desc">Foreign income, FTC, asset disclosure</p>
+                </div>
+              </div>
+              <div class="plan-price" id="itr-plan-4-price">₹3,999 - ₹5,999</div>
+              <div class="dropdown-icon" id="itr-plan-4-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="itr-plan-4-form">
+              <div class="simple-form">
+                <form id="itr-form-4" onsubmit="submitForm(event, 'itr4')">
+                  <div class="form-group">
+                    <label for="itr4-name">Full Name *</label>
+                    <input type="text" id="itr4-name" name="itr4-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr4-email">Email Address *</label>
+                    <input type="email" id="itr4-email" name="itr4-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr4-phone">Phone Number *</label>
+                    <input type="tel" id="itr4-phone" name="itr4-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itr4-income">Global Income Range *</label>
+                    <select id="itr4-income" name="itr4-income" onchange="updatePrice4()" required>
+                      <option value="">Select income range</option>
+                      <option value="<25">Less than ₹25 lakhs (₹3,999)</option>
+                      <option value="25-50">₹25-50 lakhs (₹4,999)</option>
+                      <option value=">50">More than ₹50 lakhs (₹5,999)</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="itr4-submit">Submit Application</button>
+                  <div id="success-itr4" class="success-message hide">
+                    ✓ Application submitted! NRI expert will contact you.
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GST Filing Section -->
+      <div id="gst-section" class="service-section">
+        <h2 class="section-title" id="gst-section-title">GST Filing Plans</h2>
+        <div class="plans-container" id="gst-plans-container">
+          
+          <!-- Plan 1: Monthly upto 100 invoices -->
+          <div class="plan-card" id="gst-plan-1">
+            <div class="plan-header" onclick="togglePlan('gst-plan-1')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="gst-plan-1-icon">📋</div>
+                <div class="plan-info" id="gst-plan-1-info">
+                  <h3 id="gst-plan-1-title">Monthly GST</h3>
+                  <p id="gst-plan-1-desc">Upto 100 invoices</p>
+                </div>
+              </div>
+              <div class="plan-price" id="gst-plan-1-price">₹999/month</div>
+              <div class="dropdown-icon" id="gst-plan-1-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="gst-plan-1-form">
+              <div class="simple-form">
+                <form id="gst-form-1" onsubmit="submitForm(event, 'gst1')">
+                  <div class="form-group">
+                    <label for="gst1-name">Full Name *</label>
+                    <input type="text" id="gst1-name" name="gst1-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst1-email">Email Address *</label>
+                    <input type="email" id="gst1-email" name="gst1-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst1-phone">Phone Number *</label>
+                    <input type="tel" id="gst1-phone" name="gst1-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst1-business">Business Type *</label>
+                    <select id="gst1-business" name="gst1-business" required>
+                      <option value="">Select business type</option>
+                      <option value="individual">Individual</option>
+                      <option value="partnership">Partnership</option>
+                      <option value="company">Company</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="gst1-submit">Subscribe Now</button>
+                  <div id="success-gst1" class="success-message hide">
+                    ✓ Subscription confirmed!
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan 2: Monthly more than 100 invoices -->
+          <div class="plan-card" id="gst-plan-2">
+            <div class="plan-header" onclick="togglePlan('gst-plan-2')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="gst-plan-2-icon">🏢</div>
+                <div class="plan-info" id="gst-plan-2-info">
+                  <h3 id="gst-plan-2-title">Monthly GST+</h3>
+                  <p id="gst-plan-2-desc">100+ invoices</p>
+                </div>
+              </div>
+              <div class="plan-price" id="gst-plan-2-price">₹1,799/month</div>
+              <div class="dropdown-icon" id="gst-plan-2-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="gst-plan-2-form">
+              <div class="simple-form">
+                <form id="gst-form-2" onsubmit="submitForm(event, 'gst2')">
+                  <div class="form-group">
+                    <label for="gst2-name">Full Name *</label>
+                    <input type="text" id="gst2-name" name="gst2-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst2-email">Email Address *</label>
+                    <input type="email" id="gst2-email" name="gst2-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst2-phone">Phone Number *</label>
+                    <input type="tel" id="gst2-phone" name="gst2-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst2-turnover">Annual Turnover *</label>
+                    <select id="gst2-turnover" name="gst2-turnover" required>
+                      <option value="">Select turnover range</option>
+                      <option value="1-2cr">₹1-2 crore</option>
+                      <option value="2-5cr">₹2-5 crore</option>
+                      <option value=">5cr">>₹5 crore</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="gst2-submit">Subscribe Now</button>
+                  <div id="success-gst2" class="success-message hide">
+                    ✓ Subscription confirmed!
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan 3: Quarterly Returns -->
+          <div class="plan-card" id="gst-plan-3">
+            <div class="plan-header" onclick="togglePlan('gst-plan-3')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="gst-plan-3-icon">📊</div>
+                <div class="plan-info" id="gst-plan-3-info">
+                  <h3 id="gst-plan-3-title">Quarterly GST</h3>
+                  <p id="gst-plan-3-desc">GSTR-1 & GSTR-3B quarterly</p>
+                </div>
+              </div>
+              <div class="plan-price" id="gst-plan-3-price">₹1,499/quarter</div>
+              <div class="dropdown-icon" id="gst-plan-3-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="gst-plan-3-form">
+              <div class="simple-form">
+                <form id="gst-form-3" onsubmit="submitForm(event, 'gst3')">
+                  <div class="form-group">
+                    <label for="gst3-name">Full Name *</label>
+                    <input type="text" id="gst3-name" name="gst3-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst3-email">Email Address *</label>
+                    <input type="email" id="gst3-email" name="gst3-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst3-phone">Phone Number *</label>
+                    <input type="tel" id="gst3-phone" name="gst3-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst3-business">Business Type *</label>
+                    <select id="gst3-business" name="gst3-business" required>
+                      <option value="">Select business type</option>
+                      <option value="retail">Retail</option>
+                      <option value="wholesale">Wholesale</option>
+                      <option value="services">Services</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="gst3-submit">Subscribe Now</button>
+                  <div id="success-gst3" class="success-message hide">
+                    ✓ Subscription confirmed!
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan 4: GST Registration -->
+          <div class="plan-card" id="gst-plan-4">
+            <div class="plan-header" onclick="togglePlan('gst-plan-4')">
+              <div class="plan-header-left">
+                <div class="plan-icon" id="gst-plan-4-icon">🏛️</div>
+                <div class="plan-info" id="gst-plan-4-info">
+                  <h3 id="gst-plan-4-title">GST Registration</h3>
+                  <p id="gst-plan-4-desc">For all entity types</p>
+                </div>
+              </div>
+              <div class="plan-price" id="gst-plan-4-price">₹1,499</div>
+              <div class="dropdown-icon" id="gst-plan-4-dropdown">▼</div>
+            </div>
+            <div class="plan-form" id="gst-plan-4-form">
+              <div class="simple-form">
+                <form id="gst-form-4" onsubmit="submitForm(event, 'gst4')">
+                  <div class="form-group">
+                    <label for="gst4-name">Full Name *</label>
+                    <input type="text" id="gst4-name" name="gst4-name" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst4-email">Email Address *</label>
+                    <input type="email" id="gst4-email" name="gst4-email" placeholder="you@example.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst4-phone">Phone Number *</label>
+                    <input type="tel" id="gst4-phone" name="gst4-phone" placeholder="98765 43210" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="gst4-entity">Entity Type *</label>
+                    <select id="gst4-entity" name="gst4-entity" required>
+                      <option value="">Select entity type</option>
+                      <option value="individual">Individual</option>
+                      <option value="partnership">Partnership Firm</option>
+                      <option value="company">Private Limited</option>
+                      <option value="llp">LLP</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="submit-btn" id="gst4-submit">Book Consultation</button>
+                  <div id="success-gst4" class="success-message hide">
+                    ✓ Booking confirmed!
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="filing-footer">
+      <div class="footer-links" id="filing-footer-links">
+        <a href="index.html" id="footer-home">Home</a>
+        <a href="filing-services.html?service=itr" id="footer-itr">ITR Filing</a>
+        <a href="filing-services.html?service=gst" id="footer-gst">GST Filing</a>
+        <a href="support.html" id="footer-support">Consulting</a>
+        <a href="contact.html" id="footer-contact">Contact</a>
+      </div>
+      <p id="footer-copyright">© 2025 SmartTax. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Price update functions
+    function updatePrice1() {
+      const incomeRange = document.getElementById('itr1-income').value;
+      const planPriceSpan = document.getElementById('itr-plan-1-price');
+      if (incomeRange === '<25') planPriceSpan.textContent = '0.05% of income';
+      else if (incomeRange === '>25') planPriceSpan.textContent = '₹1,699';
+      else planPriceSpan.textContent = '0.05% of income';
+    }
+
+    function updatePrice2() {
+      const incomeRange = document.getElementById('itr2-income').value;
+      const planPriceSpan = document.getElementById('itr-plan-2-price');
+      if (incomeRange === '<25') planPriceSpan.textContent = '0.07% of income';
+      else if (incomeRange === '25-50') planPriceSpan.textContent = '₹2,199';
+      else if (incomeRange === '>50') planPriceSpan.textContent = '₹2,999';
+      else planPriceSpan.textContent = '0.07% of income';
+    }
+
+    function updatePrice4() {
+      const incomeRange = document.getElementById('itr4-income').value;
+      const planPriceSpan = document.getElementById('itr-plan-4-price');
+      if (incomeRange === '<25') planPriceSpan.textContent = '₹3,999';
+      else if (incomeRange === '25-50') planPriceSpan.textContent = '₹4,999';
+      else if (incomeRange === '>50') planPriceSpan.textContent = '₹5,999';
+      else planPriceSpan.textContent = '₹3,999 - ₹5,999';
+    }
+
+    // URL params
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // Dropdown hover
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdown = document.getElementById('filing-nav-dropdown');
+      const menu = document.getElementById('filing-nav-dropdown-menu');
+      let timeoutId;
+      
+      if (dropdown) {
+        dropdown.addEventListener('mouseenter', function() {
+          clearTimeout(timeoutId);
+          this.classList.add('active');
+        });
+        
+        dropdown.addEventListener('mouseleave', function() {
+          timeoutId = setTimeout(() => {
+            this.classList.remove('active');
+          }, 500);
+        });
+        
+        menu.addEventListener('mouseenter', () => clearTimeout(timeoutId));
+        menu.addEventListener('mouseleave', () => {
+          timeoutId = setTimeout(() => dropdown.classList.remove('active'), 500);
+        });
+
+        dropdown.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          this.classList.toggle('active');
+        });
+      }
+
+      // Initialize page
+      const service = getUrlParameter('service');
+      const pageTitle = document.getElementById('filing-page-title');
+      const pageDesc = document.getElementById('filing-page-description');
+      const itrSection = document.getElementById('itr-section');
+      const gstSection = document.getElementById('gst-section');
+      
+      if (service === 'gst') {
+        if (pageTitle) pageTitle.textContent = 'GST Filing Services';
+        if (pageDesc) pageDesc.textContent = 'GST filing for businesses';
+        if (gstSection) gstSection.classList.add('active');
+        if (itrSection) itrSection.classList.remove('active');
+      } else {
+        if (pageTitle) pageTitle.textContent = 'ITR Filing Services';
+        if (pageDesc) pageDesc.textContent = 'Income tax return filing';
+        if (itrSection) itrSection.classList.add('active');
+        if (gstSection) gstSection.classList.remove('active');
+      }
+    });
+
+    // Toggle plan
+    function togglePlan(planId) {
+      const planCard = document.getElementById(planId);
+      if (!planCard) return;
+      const isActive = planCard.classList.contains('active');
+      document.querySelectorAll('.plan-card').forEach(p => p.classList.remove('active'));
+      if (!isActive) {
+        planCard.classList.add('active');
+        if (window.innerWidth <= 768) {
+          setTimeout(() => planCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+      }
+    }
+
+    // Form submission
+    function submitForm(event, formId)  {
+      event.preventDefault();
+      const successMap = {
+        itr1: 'success-itr1', itr2: 'success-itr2', itr3: 'success-itr3', itr4: 'success-itr4',
+        gst1: 'success-gst1', gst2: 'success-gst2', gst3: 'success-gst3', gst4: 'success-gst4'
+      };
+      const successId = successMap[formId];
+      const el = document.getElementById(successId);
+      if (el) {
+        el.classList.remove('hide');
+        setTimeout(() => el.classList.add('hide'), 3000);
+      }
+    }
+  </script>
+</body>
+</html>

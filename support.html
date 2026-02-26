@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SmartTax · Support Services</title>
+  <style>
+    /* Copy all the responsive styles from filing-services.html */
+    /* Same base styles with :root variables */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background: #f8fafc; color: #1e293b; line-height: 1.5; min-height: 100vh; padding: 10px; }
+    :root { --primary: #0f2b3c; --primary-dark: #0a1e2a; --secondary: #2d7a6e; --gray-200: #e2e8f0; --gray-600: #475569; }
+    .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: clamp(20px, 5vw, 40px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); overflow: hidden; width: 100%; }
+    
+    /* Navigation styles - same as above */
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; background: white; border-bottom: 1px solid var(--gray-200); flex-wrap: wrap; gap: 1rem; }
+    @media (min-width: 1024px) { .navbar { padding: 1.5rem 4rem; } }
+    .logo { display: flex; flex-direction: column; width: 100%; max-width: 300px; }
+    @media (min-width: 768px) { .logo { width: auto; } }
+    .logo h1 { font-size: clamp(1.5rem, 4vw, 1.8rem); font-weight: 700; color: var(--primary); margin-bottom: 0.2rem; }
+    .logo h3 { font-size: clamp(0.7rem, 2.5vw, 0.9rem); font-weight: 400; color: var(--gray-600); line-height: 1.4; }
+    .nav-links { display: flex; gap: clamp(0.8rem, 2vw, 2.5rem); align-items: center; flex-wrap: wrap; width: 100%; justify-content: flex-start; }
+    @media (min-width: 768px) { .nav-links { width: auto; justify-content: flex-end; } }
+    .nav-link { text-decoration: none; color: var(--gray-600); font-weight: 500; font-size: clamp(0.8rem, 2.2vw, 1rem); padding: 0.5rem 0; white-space: nowrap; }
+    .nav-link:hover { color: var(--secondary); }
+    
+    /* Dropdown styles */
+    .nav-dropdown { position: relative; display: inline-block; }
+    .nav-dropdown-trigger { color: var(--gray-600); font-weight: 500; cursor: pointer; padding: 0.5rem 0; display: flex; align-items: center; gap: 0.3rem; font-size: clamp(0.8rem, 2.2vw, 1rem); white-space: nowrap; }
+    .nav-dropdown-trigger:hover { color: var(--secondary); }
+    .nav-dropdown-trigger .arrow { font-size: 0.7rem; transition: transform 0.3s; }
+    .nav-dropdown.active .nav-dropdown-trigger .arrow { transform: rotate(180deg); }
+    .nav-dropdown-menu { position: absolute; top: 150%; left: 50%; transform: translateX(-50%); background: white; border-radius: 16px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2); min-width: 220px; width: max-content; max-width: 90vw; opacity: 0; visibility: hidden; transition: opacity 0.2s, visibility 0.2s; z-index: 1000; border: 1px solid var(--gray-200); padding: 0.5rem; }
+    @media (max-width: 768px) { .nav-dropdown-menu { left: 0; transform: none; min-width: 200px; } }
+    .nav-dropdown.active .nav-dropdown-menu { opacity: 1; visibility: visible; }
+    .nav-dropdown-item { padding: 0.8rem 1rem; cursor: pointer; border-radius: 12px; display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.2rem; text-decoration: none; color: inherit; }
+    .nav-dropdown-item:hover { background: #f0f9f6; }
+    .nav-dropdown-icon { font-size: 1.3rem; }
+    .nav-dropdown-content h4 { margin-bottom: 0.2rem; font-size: 0.9rem; color: var(--primary); }
+    .nav-dropdown-content p { font-size: 0.75rem; color: var(--gray-600); margin: 0; }
+    
+    /* Page Header */
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem); }
+    .page-header__title { font-size: clamp(1.8rem, 5vw, 3.5rem); margin-bottom: 0.5rem; word-break: break-word; }
+    .page-header__description { font-size: clamp(0.9rem, 2.5vw, 1.2rem); color: #e2e8f0; }
+    .back-link { display: inline-block; margin-bottom: 1.5rem; color: var(--secondary); text-decoration: none; font-weight: 600; font-size: clamp(0.85rem, 2.2vw, 1rem); padding: 0.5rem 0; min-height: 44px; }
+    
+    .content { padding: clamp(1.5rem, 4vw, 4rem); }
+    .plans-container { display: flex; flex-direction: column; gap: 1.2rem; width: 100%; }
+    
+    /* Plan Cards */
+    .plan-card { background: white; border: 2px solid var(--gray-200); border-radius: 20px; overflow: hidden; width: 100%; }
+    .plan-header { padding: clamp(1rem, 3vw, 2rem); cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: white; flex-wrap: wrap; gap: 0.8rem; min-height: 70px; }
+    @media (max-width: 640px) { .plan-header { flex-direction: column; align-items: flex-start; } }
+    .plan-header:hover { background: #f8fafc; }
+    .plan-header-left { display: flex; align-items: center; gap: 0.8rem; flex: 1; flex-wrap: wrap; width: 100%; }
+    @media (max-width: 480px) { .plan-header-left { flex-direction: column; align-items: flex-start; } }
+    .plan-icon { font-size: clamp(1.8rem, 4vw, 2.5rem); width: clamp(45px, 7vw, 60px); height: clamp(45px, 7vw, 60px); background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .plan-info { flex: 1; min-width: 200px; }
+    .plan-info h3 { font-size: clamp(1.2rem, 3.5vw, 1.8rem); color: var(--primary); margin-bottom: 0.3rem; word-break: break-word; }
+    .plan-info p { color: var(--gray-600); font-size: clamp(0.8rem, 2.2vw, 0.95rem); word-break: break-word; }
+    .plan-price { font-size: clamp(1rem, 3vw, 1.5rem); font-weight: 700; color: var(--secondary); margin-right: 0.5rem; min-width: fit-content; word-break: break-word; text-align: right; }
+    @media (max-width: 640px) { .plan-price { width: 100%; text-align: left; } }
+    .dropdown-icon { font-size: 1.2rem; color: var(--secondary); transition: transform 0.3s; margin-left: auto; min-width: 30px; text-align: center; }
+    .plan-form { display: none; padding: clamp(1rem, 3vw, 2rem); background: #f8fafc; border-top: 2px solid var(--gray-200); }
+    .plan-card.active .plan-form { display: block; }
+    .plan-card.active .dropdown-icon { transform: rotate(180deg); }
+    
+    /* Form Styles */
+    .simple-form { max-width: 600px; margin: 0 auto; width: 100%; }
+    .form-group { margin-bottom: 1.2rem; width: 100%; }
+    .form-group label { display: block; margin-bottom: 0.4rem; color: var(--primary); font-weight: 600; font-size: clamp(0.85rem, 2.2vw, 1rem); }
+    .form-group input, .form-group select { width: 100%; padding: 0.8rem 1rem; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 1rem; -webkit-appearance: none; appearance: none; font-size: clamp(0.9rem, 2.5vw, 1rem); }
+    .form-group input:focus, .form-group select:focus { border-color: var(--secondary); outline: none; }
+    .submit-btn { background: var(--secondary); color: white; border: none; padding: 1rem; border-radius: 50px; font-weight: 600; font-size: clamp(0.95rem, 2.5vw, 1.1rem); cursor: pointer; width: 100%; margin-top: 1rem; transition: background 0.3s; min-height: 50px; }
+    .submit-btn:hover { background: var(--primary); }
+    .success-message { background: #10b981; color: white; padding: 1rem; border-radius: 12px; margin-top: 1rem; text-align: center; font-size: clamp(0.85rem, 2.2vw, 1rem); word-break: break-word; }
+    .hide { display: none; }
+    
+    /* Footer */
+    .footer { background: var(--primary-dark); color: white; padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 3rem); text-align: center; width: 100%; }
+    .footer__links { display: flex; justify-content: center; gap: clamp(1rem, 3vw, 2rem); margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .footer__link { color: white; text-decoration: none; opacity: 0.8; font-size: clamp(0.8rem, 2.2vw, 1rem); padding: 0.5rem; min-height: 44px; display: inline-flex; align-items: center; }
+    .footer__link:hover { opacity: 1; }
+    .footer__copyright { font-size: clamp(0.8rem, 2vw, 0.9rem); color: #94a3b8; }
+    
+    @media (max-width: 768px) { .nav-links { justify-content: flex-start; overflow-x: auto; padding-bottom: 0.5rem; -webkit-overflow-scrolling: touch; } }
+    @media (max-width: 480px) { body { padding: 5px; } .form-group input, .form-group select { padding: 0.7rem; } }
+  </style>
+</head>
+<body>
+  <div class="container" id="support-container">
+    <!-- Navigation -->
+    <nav class="navbar" id="support-navbar">
+      <div class="logo" id="support-logo">
+        <h1 id="support-logo-title">SarvaTax</h1>
+        <h3 id="support-logo-subtitle">Driven by fresh thinking, backed by practical experience</h3>
+      </div>
+      <div class="nav-links" id="support-nav-links">
+        <a href="index.html" class="nav-link" id="support-nav-home">Home</a>
+        <div class="nav-dropdown" id="support-nav-dropdown">
+          <div class="nav-dropdown-trigger" id="support-nav-dropdown-trigger">
+            Filing Services <span class="arrow">▼</span>
+          </div>
+          <div class="nav-dropdown-menu" id="support-nav-dropdown-menu">
+            <a href="filing-services.html?service=itr" class="nav-dropdown-item">
+              <span class="nav-dropdown-icon">📊</span>
+              <div class="nav-dropdown-content"><h4>ITR Filing</h4><p>Income Tax Return</p></div>
+            </a>
+            <a href="filing-services.html?service=gst" class="nav-dropdown-item">
+              <span class="nav-dropdown-icon">📦</span>
+              <div class="nav-dropdown-content"><h4>GST Filing</h4><p>GST for businesses</p></div>
+            </a>
+          </div>
+        </div>
+        <a href="support.html" class="nav-link" id="support-nav-support">Consulting</a>
+        <a href="contact.html" class="nav-link" id="support-nav-contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header" id="support-page-header">
+      <a href="index.html" class="back-link">← Back to Home</a>
+      <h1 class="page-header__title">Support Services</h1>
+      <p class="page-header__description">Click on any plan below to get expert assistance</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div class="plans-container">
+        <!-- Plan 1: Notices -->
+        <div class="plan-card" id="support-plan-1">
+          <div class="plan-header" onclick="togglePlan('support-plan-1')">
+            <div class="plan-header-left">
+              <div class="plan-icon">📢</div>
+              <div class="plan-info">
+                <h3>Notices & Demand handling</h3>
+                <p>Expert handling of all tax notices</p>
+              </div>
+            </div>
+            <div class="plan-price">1% or ₹699 min</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="noticeForm" onsubmit="submitForm(event, 'notice')">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="notice-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" id="notice-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="notice-phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Type of Demand *</label>
+                  <select id="notice-type" required>
+                    <option value="">Select type</option>
+                    <option value="income-tax">Income tax</option>
+                    <option value="gst">GST</option>
+                    <option value="others">others</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request</button>
+                <div id="success-notice" class="success-message hide">✓ Request submitted! We'll contact you.</div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 2: TDS -->
+        <div class="plan-card" id="support-plan-2">
+          <div class="plan-header" onclick="togglePlan('support-plan-2')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🔄</div>
+              <div class="plan-info">
+                <h3>TDS/AIS Correction</h3>
+                <p>Fix TDS mismatches, AIS discrepancies</p>
+              </div>
+            </div>
+            <div class="plan-price">₹499</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="tdsForm" onsubmit="submitForm(event, 'tds')">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="tds-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" id="tds-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="tds-phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Description *</label>
+                  <input type="text" id="tds-description" placeholder="Describe the issue" required>
+                </div>
+                <button type="submit" class="submit-btn">Submit Request</button>
+                <div id="success-tds" class="success-message hide">✓ Request submitted!</div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 3: Annual -->
+        <div class="plan-card" id="support-plan-3">
+          <div class="plan-header" onclick="togglePlan('support-plan-3')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🌟</div>
+              <div class="plan-info">
+                <h3>Annual Support Plan</h3>
+                <p>Unlimited queries + 1 free ITR filing</p>
+              </div>
+            </div>
+            <div class="plan-price">₹4,999</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="annualForm" onsubmit="submitForm(event, 'annual')">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="annual-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" id="annual-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="annual-phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Plan Type *</label>
+                  <select id="annual-plan-type" required>
+                    <option value="">Select plan</option>
+                    <option value="1year">1 Year - ₹4,999</option>
+                    <option value="2year">2 Years - ₹8,999</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn">Subscribe Now</button>
+                <div id="success-annual" class="success-message hide">✓ Subscription confirmed!</div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 4: Portal -->
+        <div class="plan-card" id="support-plan-4">
+          <div class="plan-header" onclick="togglePlan('support-plan-4')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🔧</div>
+              <div class="plan-info">
+                <h3>Portal Assistance</h3>
+                <p>IT or GST portal</p>
+              </div>
+            </div>
+            <div class="plan-price">₹299</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="portalForm" onsubmit="submitForm(event, 'portal')">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="portal-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" id="portal-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="portal-phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Assistance Type *</label>
+                  <select id="portal-type" required>
+                    <option value="">Select type</option>
+                    <option value="income-tax">Income Tax Portal</option>
+                    <option value="gst">GST Portal</option>
+                    <option value="others">Others</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn">Get Assistance</button>
+                <div id="success-portal" class="success-message hide">✓ Request submitted!</div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 5: MSME -->
+        <div class="plan-card" id="support-plan-5">
+          <div class="plan-header" onclick="togglePlan('support-plan-5')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🚀</div>
+              <div class="plan-info">
+                <h3>Startup (MSME Kit)</h3>
+                <p>MSME registration, Udyam certificate</p>
+              </div>
+            </div>
+            <div class="plan-price">₹1,999</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="msmeForm" onsubmit="submitForm(event, 'msme')">
+                <div class="form-group">
+                  <label>Full Name / Business Name *</label>
+                  <input type="text" id="msme-name" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" id="msme-email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="msme-phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Business Type *</label>
+                  <select id="msme-type" required>
+                    <option value="">Select business type</option>
+                    <option value="proprietorship">Proprietorship</option>
+                    <option value="partnership">Partnership</option>
+                    <option value="pvt-ltd">Private Limited</option>
+                    <option value="llp">LLP</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Services Required *</label>
+                  <select id="msme-services" required>
+                    <option value="">Select services</option>
+                    <option value="msme-reg">MSME/Udyam Registration (₹499)</option>
+                    <option value="startup-reg">Startup India Registration (₹799)</option>
+                    <option value="both">Both (₹999)</option>
+                    <option value="consultation">Company incorporation (₹29,999)</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn">Get MSME Kit</button>
+                <div id="success-msme" class="success-message hide">✓ Request submitted! Startup expert will contact you.</div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer__links">
+        <a href="index.html" class="footer__link">Home</a>
+        <a href="filing-services.html?service=itr" class="footer__link">ITR Filing</a>
+        <a href="filing-services.html?service=gst" class="footer__link">GST Filing</a>
+        <a href="support.html" class="footer__link">Consulting</a>
+        <a href="contact.html" class="footer__link">Contact</a>
+      </div>
+      <p class="footer__copyright">© 2025 SmartTax. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Dropdown hover
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdown = document.getElementById('support-nav-dropdown');
+      const menu = document.querySelector('.nav-dropdown-menu');
+      let timeoutId;
+      if (dropdown) {
+        dropdown.addEventListener('mouseenter', function() { clearTimeout(timeoutId); this.classList.add('active'); });
+        dropdown.addEventListener('mouseleave', function() { timeoutId = setTimeout(() => this.classList.remove('active'), 500); });
+        menu.addEventListener('mouseenter', () => clearTimeout(timeoutId));
+        menu.addEventListener('mouseleave', () => timeoutId = setTimeout(() => dropdown.classList.remove('active'), 500));
+        dropdown.addEventListener('touchstart', function(e) { e.preventDefault(); this.classList.toggle('active'); });
+      }
+    });
+
+    // Toggle plan
+    function togglePlan(planId) {
+      const planCard = document.getElementById(planId);
+      if (!planCard) return;
+      const isActive = planCard.classList.contains('active');
+      document.querySelectorAll('.plan-card').forEach(p => p.classList.remove('active'));
+      if (!isActive) {
+        planCard.classList.add('active');
+        if (window.innerWidth <= 768) setTimeout(() => planCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+      }
+    }
+
+    // Form submit
+    function submitForm(event, formId) {
+      event.preventDefault();
+      const map = { notice: 'success-notice', tds: 'success-tds', annual: 'success-annual', portal: 'success-portal', msme: 'success-msme' };
+      const el = document.getElementById(map[formId]);
+      if (el) { el.classList.remove('hide'); setTimeout(() => el.classList.add('hide'), 3000); }
+    }
+  </script>
+</body>
+</html>
