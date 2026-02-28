@@ -137,10 +137,10 @@
         <p>We combine knowledge, technology, and integrity to deliver services that protect and strengthen your financial position.</p>
         
         <div class="stats-grid">
-          <div class="stat-item"><div class="stat-number">6+</div><div class="stat-label">Years Experience</div></div>
-          <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Clients Served</div></div>
+          <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Years Experience</div></div>
+          <div class="stat-item"><div class="stat-number">10K+</div><div class="stat-label">Clients Served</div></div>
           <div class="stat-item"><div class="stat-number">4.9★</div><div class="stat-label">Client Rating</div></div>
-          <div class="stat-item"><div class="stat-number">400+</div><div class="stat-label">ITR Filed</div></div>
+          <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">ITR Filed</div></div>
         </div>
       </div>
 
@@ -213,3 +213,102 @@
           </div>
         </div>
       </div>
+
+      <!-- Our Team -->
+      <div class="about-card">
+        <h2>Our Leadership</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="icon">👨‍💼</div>
+            <h4>Nandeesh</h4>
+            <div class="role">Founder & Lead Tax Consultant</div>
+            <p class="desc">15+ years of experience in direct and indirect taxation. Expert in complex tax matters and AI-driven compliance.</p>
+          </div>
+          <div class="team-member">
+            <div class="icon">👩‍💼</div>
+            <h4>Priya Sharma</h4>
+            <div class="role">Senior Tax Advisor</div>
+            <p class="desc">Specializes in GST compliance and corporate taxation. 10+ years of industry experience.</p>
+          </div>
+          <div class="team-member">
+            <div class="icon">👨‍💻</div>
+            <h4>Rahul Mehta</h4>
+            <div class="role">ITR & TDS Specialist</div>
+            <p class="desc">Expert in income tax returns, TDS reconciliation, and proactive notice prevention.</p>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:2rem;">Our team combines practical experience with theoretical expertise to deliver solutions that are accurate, reliable, and aligned with current laws and technological advancements.</p>
+      </div>
+
+      <!-- Why Choose SarvaTax -->
+      <div class="about-card">
+        <h2>Why Choose SarvaTax?</h2>
+        <ul>
+          <li><strong>Deep Expertise:</strong> Strong foundation in taxation, finance, and regulatory compliance</li>
+          <li><strong>Technology-Driven:</strong> Leveraging AI and modern tools for accurate reporting</li>
+          <li><strong>Proactive Approach:</strong> We prevent problems before they arise, not just fix them after</li>
+          <li><strong>Notice Prevention:</strong> Special focus on ensuring unnecessary notices and penalties do not arise</li>
+          <li><strong>Integrity First:</strong> Honest, transparent, and ethical practices in everything we do</li>
+          <li><strong>Quick Response:</strong> We guarantee response within 4 hours for all queries</li>
+        </ul>
+      </div>
+
+      <!-- Our Commitment -->
+      <div class="about-card">
+        <h2>Our Commitment</h2>
+        <p>We combine knowledge, technology, and integrity to deliver services that protect and strengthen your financial position. In an era where tax authorities have unprecedented access to financial data, we help you navigate the complex landscape with confidence and peace of mind.</p>
+        <p>Whether you're an individual taxpayer, a growing business, or a large corporation, SarvaTax is your trusted partner for accurate reporting, proper compliance, and proactive planning.</p>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="about-card" style="background:var(--primary);color:white;text-align:center;">
+        <h2 style="color:white;border-bottom-color:var(--accent);">Ready to Work With Us?</h2>
+        <p style="color:#e2e8f0;margin-bottom:1.5rem;">Get in touch with our team today for a free initial consultation and experience the SarvaTax difference.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="contact.html" style="background:var(--accent);color:var(--primary);text-decoration:none;padding:.8rem 2rem;border-radius:50px;font-weight:600;">Contact Us</a>
+          <a href="filing-services.html" style="background:transparent;color:white;text-decoration:none;padding:.8rem 2rem;border-radius:50px;font-weight:600;border:2px solid white;">View Services</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="filing-services.html?service=itr">ITR Filing</a>
+      <a href="filing-services.html?service=gst">GST Filing</a>
+      <a href="consulting.html">Consulting</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div style="margin: 1rem 0;">
+      <a href="mailto:nandeesh@sarvatax.com" style="color: #eab308; text-decoration: none;">📧 nandeesh@sarvatax.com</a>
+      <span style="color: #94a3b8; margin: 0 0.5rem;">|</span>
+      <a href="tel:+918217726457" style="color: #eab308; text-decoration: none;">📞 82177 26457</a>
+    </div>
+    <p>© 2026 SarvaTax. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+  // Hamburger menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Dropdown menu
+  const dd = document.getElementById('filingDropdown');
+  const tr = document.getElementById('filingTrigger');
+  let ht;
+  dd.addEventListener('mouseenter', () => { clearTimeout(ht); dd.classList.add('active'); });
+  dd.addEventListener('mouseleave', () => { ht = setTimeout(() => dd.classList.remove('active'), 400); });
+  tr.addEventListener('click', e => { if(window.innerWidth <= 767){ e.stopPropagation(); dd.classList.toggle('active'); } });
+  document.addEventListener('click', e => { if(!dd.contains(e.target)) dd.classList.remove('active'); });
+</script>
+</body>
+</html>
