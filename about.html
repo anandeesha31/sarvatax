@@ -137,6 +137,221 @@
         <p>We combine knowledge, technology, and integrity to deliver services that protect and strengthen your financial position.</p>
         
         <div class="stats-grid">
+          <div class="stat-item"><div class="stat-number">6+</div><div class="stat-label">Years Experience</div></div>
+          <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Clients Served</div></div>
+          <div class="stat-item"><div class="stat-number">4.9★</div><div class="stat-label">Client Rating</div></div>
+          <div class="stat-item"><div class="stat-number">400+</div><div class="stat-label">ITR Filed</div></div>
+        </div>
+      </div>
+
+      <!-- Our Mission -->
+      <div class="about-card">
+        <h2>Our Mission</h2>
+        <div class="highlight">
+          <p><strong>To simplify taxation and provide strategic financial solutions that help our clients save money and stay compliant in this new era of AI-driven tax administration.</strong></p>
+        </div>
+        <p>We strive to:</p>
+        <ul>
+          <li><strong>Ensure Accurate Reporting:</strong> Leveraging technology to minimize errors and discrepancies</li>
+          <li><strong>Maintain Proper Compliance:</strong> Staying ahead of regulatory changes and automated scrutiny</li>
+          <li><strong>Provide Proactive Planning:</strong> Anticipating issues before they become notices or demands</li>
+          <li><strong>Prevent Penalties:</strong> Helping clients avoid unnecessary notices and financial penalties</li>
+        </ul>
+      </div>
+
+      <!-- Our Core Values -->
+      <div class="about-card">
+        <h2>Our Core Values</h2>
+        <div class="values-list">
+          <div class="value-item">
+            <div class="value-icon">📊</div>
+            <h4>Accuracy</h4>
+            <p>Meticulous attention to detail in every return and consultation, ensuring error-free reporting</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🤝</div>
+            <h4>Integrity</h4>
+            <p>Honest, transparent, and ethical practices always, building trust with every client</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">💡</div>
+            <h4>Knowledge</h4>
+            <p>Deep expertise in taxation, finance, and regulatory compliance, constantly updated</p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">⚙️</div>
+            <h4>Technology</h4>
+            <p>Leveraging modern tools and AI to deliver accurate, compliant, and efficient solutions</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- What We Do -->
+      <div class="about-card">
+        <h2>Our Services</h2>
+        <p>We offer a comprehensive range of financial and taxation services designed to protect and strengthen your financial position:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1.5rem 0;">
+          <div style="background:var(--gray-100);padding:1rem;border-radius:12px;">
+            <div style="font-size:1.5rem;margin-bottom:.5rem;">📊</div>
+            <strong>ITR Filing</strong>
+            <p style="font-size:.85rem;margin-top:.25rem;">For individuals, businesses, and NRIs with 100% accuracy</p>
+          </div>
+          <div style="background:var(--gray-100);padding:1rem;border-radius:12px;">
+            <div style="font-size:1.5rem;margin-bottom:.5rem;">📦</div>
+            <strong>GST Filing</strong>
+            <p style="font-size:.85rem;margin-top:.25rem;">Monthly, quarterly, and registration with compliance focus</p>
+          </div>
+          <div style="background:var(--gray-100);padding:1rem;border-radius:12px;">
+            <div style="font-size:1.5rem;margin-bottom:.5rem;">📢</div>
+            <strong>Tax Consulting</strong>
+            <p style="font-size:.85rem;margin-top:.25rem;">Expert advice and proactive planning to prevent notices</p>
+          </div>
+          <div style="background:var(--gray-100);padding:1rem;border-radius:12px;">
+            <div style="font-size:1.5rem;margin-bottom:.5rem;">🏛️</div>
+            <strong>Registration</strong>
+            <p style="font-size:.85rem;margin-top:.25rem;">Trust, HUF, MSME, and more with complete documentation</p>
+          </div>
+        </div>
+      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SarvaTax · About Us</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.5;min-height:100vh;padding:8px;-webkit-text-size-adjust:100%;}
+    :root{--primary:#0f2b3c;--primary-dark:#0a1e2a;--secondary:#2d7a6e;--accent:#eab308;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-600:#475569;--gray-800:#1e293b;}
+    .container{max-width:1400px;margin:0 auto;background:white;border-radius:clamp(16px,4vw,36px);box-shadow:0 20px 50px -12px rgba(0,0,0,.15);overflow:hidden;}
+
+    /* NAV */
+    .navbar{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:white;border-bottom:1px solid var(--gray-200);position:relative;}
+    @media(min-width:1024px){.navbar{padding:1.4rem 4rem;}}
+    .logo h1{font-size:clamp(1.4rem,5vw,2rem);font-weight:700;color:var(--primary);}
+    .logo h3{font-size:clamp(.65rem,2.5vw,.85rem);font-weight:400;color:var(--gray-600);line-height:1.4;max-width:260px;}
+    .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:8px;-webkit-tap-highlight-color:transparent;}
+    .nav-toggle span{display:block;width:22px;height:2px;background:var(--primary);border-radius:2px;transition:transform .3s,opacity .3s;}
+    .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .nav-toggle.open span:nth-child(2){opacity:0;}
+    .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    @media(max-width:767px){.nav-toggle{display:flex;}}
+    .nav-links{display:flex;gap:clamp(1rem,2.5vw,2.5rem);align-items:center;}
+    @media(max-width:767px){
+      .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:white;flex-direction:column;align-items:flex-start;padding:1rem 1.5rem 1.5rem;gap:0;border-top:1px solid var(--gray-200);box-shadow:0 8px 20px rgba(0,0,0,.1);z-index:999;}.nav-links.open{display:flex;}
+    }
+    .nav-link{text-decoration:none;color:var(--gray-600);font-weight:500;font-size:clamp(.9rem,2.5vw,1rem);padding:.6rem 0;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;transition:color .2s;-webkit-tap-highlight-color:transparent;}
+    .nav-link:hover{color:var(--secondary);}
+    @media(max-width:767px){.nav-link{width:100%;padding:.75rem 0;border-bottom:1px solid var(--gray-100);font-size:1rem;}}
+    .nav-dropdown{position:relative;display:inline-block;}
+    .nav-dropdown-trigger{color:var(--gray-600);font-weight:500;cursor:pointer;padding:.6rem 0;display:flex;align-items:center;gap:.3rem;font-size:clamp(.9rem,2.5vw,1rem);white-space:nowrap;min-height:44px;-webkit-tap-highlight-color:transparent;}
+    .nav-dropdown-trigger:hover{color:var(--secondary);}
+    .nav-dropdown-trigger .arrow{font-size:.65rem;transition:transform .3s;}
+    .nav-dropdown.active .nav-dropdown-trigger .arrow{transform:rotate(180deg);}
+    .nav-dropdown-menu{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-4px);background:white;border-radius:14px;box-shadow:0 16px 40px -10px rgba(0,0,0,.2);min-width:220px;max-width:90vw;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s,transform .2s;z-index:1000;border:1px solid var(--gray-200);padding:.5rem;}
+    .nav-dropdown.active .nav-dropdown-menu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+    @media(max-width:767px){
+      .nav-dropdown{width:100%;}.nav-dropdown-trigger{width:100%;padding:.75rem 0;border-bottom:1px solid var(--gray-100);font-size:1rem;}.nav-dropdown-menu{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:none;border-radius:0;padding:0 0 0 1rem;display:none;}.nav-dropdown.active .nav-dropdown-menu{display:block;transform:none;}
+    }
+    .nav-dropdown-item{padding:.75rem 1rem;border-radius:10px;display:flex;align-items:center;gap:.75rem;text-decoration:none;color:inherit;transition:background .15s;}
+    .nav-dropdown-item:hover{background:#f0f9f6;}
+    .nav-dropdown-icon{font-size:1.25rem;}
+    .nav-dropdown-content h4{font-size:.9rem;color:var(--primary);margin-bottom:.1rem;}
+    .nav-dropdown-content p{font-size:.72rem;color:var(--gray-600);margin:0;}
+
+    /* PAGE HEADER */
+    .page-header{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);color:white;padding:clamp(2rem,6vw,4rem) clamp(1.5rem,5vw,4rem);}
+    .page-header h1{font-size:clamp(1.8rem,6vw,3.2rem);margin-bottom:.4rem;}
+    .page-header p{font-size:clamp(.9rem,3vw,1.1rem);color:#cbd5e1;}
+    .back-link{display:inline-flex;align-items:center;margin-bottom:1.2rem;color:#67e8f9;text-decoration:none;font-weight:600;font-size:.9rem;min-height:44px;}
+
+    /* CONTENT */
+    .content{padding:clamp(1.2rem,4vw,3.5rem);}
+    
+    /* ABOUT SECTION */
+    .about-section{max-width:1000px;margin:0 auto;}
+    .about-card{background:white;border-radius:24px;padding:clamp(1.5rem,4vw,2.5rem);margin-bottom:2rem;border:1px solid var(--gray-200);box-shadow:0 8px 24px -8px rgba(0,0,0,.1);}
+    .about-card h2{font-size:clamp(1.4rem,4vw,2rem);color:var(--primary);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:2px solid var(--secondary);}
+    .about-card h3{font-size:clamp(1.1rem,3vw,1.4rem);color:var(--primary);margin:1.5rem 0 1rem;}
+    .about-card p{color:var(--gray-600);font-size:clamp(.95rem,2.5vw,1.05rem);line-height:1.7;margin-bottom:1rem;}
+    .about-card ul, .about-card ol{padding-left:1.5rem;margin:1rem 0;color:var(--gray-600);}
+    .about-card li{margin-bottom:.5rem;font-size:clamp(.9rem,2.5vw,1rem);}
+    .highlight{background:var(--gray-100);padding:1.5rem;border-radius:16px;margin:1.5rem 0;border-left:4px solid var(--secondary);}
+    .highlight p:last-child{margin-bottom:0;}
+    .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-top:2rem;}
+    .team-member{text-align:center;padding:1.5rem;background:var(--gray-100);border-radius:16px;}
+    .team-member .icon{font-size:3rem;margin-bottom:1rem;}
+    .team-member h4{color:var(--primary);font-size:1.2rem;margin-bottom:.25rem;}
+    .team-member .role{color:var(--secondary);font-weight:600;font-size:.9rem;margin-bottom:.5rem;}
+    .team-member .desc{color:var(--gray-600);font-size:.9rem;}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.5rem;margin:2rem 0;}
+    .stat-item{text-align:center;padding:1.5rem;background:var(--gray-100);border-radius:16px;}
+    .stat-number{font-size:2rem;font-weight:700;color:var(--secondary);margin-bottom:.25rem;}
+    .stat-label{color:var(--gray-600);font-size:.9rem;text-transform:uppercase;letter-spacing:1px;}
+    .values-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin:2rem 0;}
+    .value-item{text-align:center;padding:1.5rem;background:white;border-radius:16px;border:1px solid var(--gray-200);}
+    .value-icon{font-size:2rem;margin-bottom:1rem;}
+    .value-item h4{color:var(--primary);margin-bottom:.5rem;}
+    .value-item p{color:var(--gray-600);font-size:.9rem;margin:0;}
+
+    /* FOOTER */
+    .footer{background:var(--primary-dark);color:white;padding:clamp(2rem,5vw,3.5rem) clamp(1.5rem,5vw,4rem);text-align:center;}
+    .footer-links{display:flex;justify-content:center;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;}
+    .footer-links a{color:white;text-decoration:none;opacity:.75;font-size:.85rem;padding:.5rem .9rem;min-height:44px;display:inline-flex;align-items:center;background:rgba(255,255,255,.08);border-radius:50px;transition:opacity .2s,background .2s;}
+    .footer-links a:hover{opacity:1;background:rgba(255,255,255,.15);}
+    .footer p{font-size:.8rem;color:#94a3b8;}
+    button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="logo"><h1>SarvaTax</h1><h3>Driven by fresh thinking, backed by practical experience</h3></div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">Home</a>
+      <div class="nav-dropdown" id="filingDropdown">
+        <div class="nav-dropdown-trigger" id="filingTrigger">Filing Services <span class="arrow">▼</span></div>
+        <div class="nav-dropdown-menu">
+          <a href="filing-services.html?service=itr" class="nav-dropdown-item"><span class="nav-dropdown-icon">📊</span><div class="nav-dropdown-content"><h4>ITR Filing</h4><p>Income Tax Return</p></div></a>
+          <a href="filing-services.html?service=gst" class="nav-dropdown-item"><span class="nav-dropdown-icon">📦</span><div class="nav-dropdown-content"><h4>GST Filing</h4><p>GST for businesses</p></div></a>
+        </div>
+      </div>
+      <a href="consulting.html" class="nav-link">Consulting</a>
+      <a href="about.html" class="nav-link">About Us</a>
+      <a href="contact.html" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    <h1>About Us</h1>
+    <p>Driven by fresh thinking, backed by practical experience</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+    <div class="about-section">
+      
+      <!-- The Digital Era & Taxation -->
+      <div class="about-card">
+        <h2>Taxation in the Digital Era</h2>
+        <p>In today's digital era, technology and Artificial Intelligence have transformed the taxation system. With advanced data analytics, automated reporting, and real-time information sharing, nearly 90% of financial transactions are already accessible to tax authorities. The Income Tax Department now operates with powerful systems that track compliance more efficiently than ever before.</p>
+        <div class="highlight">
+          <p><strong>At Sarvatax, we understand this changing landscape.</strong></p>
+        </div>
+        <p>We believe taxation today is not just about filing returns — it is about accurate reporting, proper compliance, and proactive planning to ensure that unnecessary notices, demands, and penalties do not arise.</p>
+      </div>
+
+      <!-- Who We Are -->
+      <div class="about-card">
+        <h2>Who We Are</h2>
+        <p>With a strong foundation of both practical experience and theoretical expertise in taxation, finance, and regulatory compliance, we provide solutions that are accurate, reliable, and aligned with current laws and technological advancements.</p>
+        <p>We combine knowledge, technology, and integrity to deliver services that protect and strengthen your financial position.</p>
+        
+        <div class="stats-grid">
           <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Years Experience</div></div>
           <div class="stat-item"><div class="stat-number">10K+</div><div class="stat-label">Clients Served</div></div>
           <div class="stat-item"><div class="stat-number">4.9★</div><div class="stat-label">Client Rating</div></div>
@@ -226,13 +441,13 @@
           </div>
           <div class="team-member">
             <div class="icon">👩‍💼</div>
-            <h4>Priya Sharma</h4>
+            <h4>Srividya A N</h4>
             <div class="role">Senior Tax Advisor</div>
-            <p class="desc">Specializes in GST compliance and corporate taxation. 10+ years of industry experience.</p>
+            <p class="desc">Specializes in GST and IT compliance and corporate taxation. 10+ years of industry experience & 28 years of age experience</p>
           </div>
           <div class="team-member">
             <div class="icon">👨‍💻</div>
-            <h4>Rahul Mehta</h4>
+            <h4>Dhanush A</h4>
             <div class="role">ITR & TDS Specialist</div>
             <p class="desc">Expert in income tax returns, TDS reconciliation, and proactive notice prevention.</p>
           </div>
@@ -311,4 +526,77 @@
   document.addEventListener('click', e => { if(!dd.contains(e.target)) dd.classList.remove('active'); });
 </script>
 </body>
+</html>
+      <!-- Why Choose SarvaTax -->
+      <div class="about-card">
+        <h2>Why Choose SarvaTax?</h2>
+        <ul>
+          <li><strong>Deep Expertise:</strong> Strong foundation in taxation, finance, and regulatory compliance</li>
+          <li><strong>Technology-Driven:</strong> Leveraging AI and modern tools for accurate reporting</li>
+          <li><strong>Proactive Approach:</strong> We prevent problems before they arise, not just fix them after</li>
+          <li><strong>Notice Prevention:</strong> Special focus on ensuring unnecessary notices and penalties do not arise</li>
+          <li><strong>Integrity First:</strong> Honest, transparent, and ethical practices in everything we do</li>
+          <li><strong>Quick Response:</strong> We guarantee response within 4 hours for all queries</li>
+        </ul>
+      </div>
+
+      <!-- Our Commitment -->
+      <div class="about-card">
+        <h2>Our Commitment</h2>
+        <p>We combine knowledge, technology, and integrity to deliver services that protect and strengthen your financial position. In an era where tax authorities have unprecedented access to financial data, we help you navigate the complex landscape with confidence and peace of mind.</p>
+        <p>Whether you're an individual taxpayer, a growing business, or a large corporation, SarvaTax is your trusted partner for accurate reporting, proper compliance, and proactive planning.</p>
+      </div>
+
+      <!-- Contact CTA -->
+      <div class="about-card" style="background:var(--primary);color:white;text-align:center;">
+        <h2 style="color:white;border-bottom-color:var(--accent);">Ready to Work With Us?</h2>
+        <p style="color:#e2e8f0;margin-bottom:1.5rem;">Get in touch with our team today for a free initial consultation and experience the SarvaTax difference.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="contact.html" style="background:var(--accent);color:var(--primary);text-decoration:none;padding:.8rem 2rem;border-radius:50px;font-weight:600;">Contact Us</a>
+          <a href="filing-services.html" style="background:transparent;color:white;text-decoration:none;padding:.8rem 2rem;border-radius:50px;font-weight:600;border:2px solid white;">View Services</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="filing-services.html?service=itr">ITR Filing</a>
+      <a href="filing-services.html?service=gst">GST Filing</a>
+      <a href="consulting.html">Consulting</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div style="margin: 1rem 0;">
+      <a href="mailto:nandeesh@sarvatax.com" style="color: #eab308; text-decoration: none;">📧 nandeesh@sarvatax.com</a>
+      <span style="color: #94a3b8; margin: 0 0.5rem;">|</span>
+      <a href="tel:+918217726457" style="color: #eab308; text-decoration: none;">📞 82177 26457</a>
+    </div>
+    <p>© 2026 SarvaTax. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+  // Hamburger menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Dropdown menu
+  const dd = document.getElementById('filingDropdown');
+  const tr = document.getElementById('filingTrigger');
+  let ht;
+  dd.addEventListener('mouseenter', () => { clearTimeout(ht); dd.classList.add('active'); });
+  dd.addEventListener('mouseleave', () => { ht = setTimeout(() => dd.classList.remove('active'), 400); });
+  tr.addEventListener('click', e => { if(window.innerWidth <= 767){ e.stopPropagation(); dd.classList.toggle('active'); } });
+  document.addEventListener('click', e => { if(!dd.contains(e.target)) dd.classList.remove('active'); });
+</script>
+</body>
+
 </html>
