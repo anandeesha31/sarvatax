@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SarvaTax · Professional Tax Advisory</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc; color: #1e293b; line-height: 1.5;
+      min-height: 100vh; padding: 8px; -webkit-text-size-adjust: 100%;
+    }
+    :root {
+      --primary: #0f2b3c; --primary-dark: #0a1e2a;
+      --secondary: #2d7a6e; --accent: #eab308;
+      --gray-100: #f1f5f9; --gray-200: #e2e8f0;
+      --gray-600: #475569; --gray-800: #1e293b;
+    }
+    .container {
+      max-width: 1400px; margin: 0 auto; background: white;
+      border-radius: clamp(16px,4vw,36px);
+      box-shadow: 0 20px 50px -12px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 1.5rem; background: white;
+      border-bottom: 1px solid var(--gray-200); position: relative;
+    }
+    @media(min-width:1024px){ .navbar { padding: 1.4rem 4rem; } }
+
+    .logo h1 { font-size: clamp(1.4rem,5vw,2rem); font-weight:700; color:var(--primary); }
+    .logo h3 { font-size: clamp(0.65rem,2.5vw,0.85rem); font-weight:400; color:var(--gray-600); line-height:1.4; max-width:260px; }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none; flex-direction: column; justify-content: center;
+      gap: 5px; width:44px; height:44px; background:none; border:none;
+      cursor:pointer; padding:8px; -webkit-tap-highlight-color:transparent;
+    }
+    .nav-toggle span { display:block; width:22px; height:2px; background:var(--primary); border-radius:2px; transition: transform .3s, opacity .3s; }
+    .nav-toggle.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity:0; }
+    .nav-toggle.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+    @media(max-width:767px){ .nav-toggle { display:flex; } }
+
+    /* Nav links */
+    .nav-links { display:flex; gap:clamp(1rem,2.5vw,2.5rem); align-items:center; }
+    @media(max-width:767px){
+      .nav-links {
+        display:none; position:absolute; top:100%; left:0; right:0;
+        background:white; flex-direction:column; align-items:flex-start;
+        padding:1rem 1.5rem 1.5rem; gap:0; border-top:1px solid var(--gray-200);
+        box-shadow:0 8px 20px rgba(0,0,0,0.1); z-index:999;
+      }
+      .nav-links.open { display:flex; }
+    }
+
+    .nav-link {
+      text-decoration:none; color:var(--gray-600); font-weight:500;
+      font-size:clamp(0.9rem,2.5vw,1rem); padding:0.6rem 0;
+      white-space:nowrap; min-height:44px; display:inline-flex;
+      align-items:center; transition:color .2s; -webkit-tap-highlight-color:transparent;
+    }
+    .nav-link:hover { color:var(--secondary); }
+    @media(max-width:767px){
+      .nav-link { width:100%; padding:0.75rem 0; border-bottom:1px solid var(--gray-100); font-size:1rem; }
+    }
+
+    /* Dropdown */
+    .nav-dropdown { position:relative; display:inline-block; }
+    .nav-dropdown-trigger {
+      color:var(--gray-600); font-weight:500; cursor:pointer;
+      padding:0.6rem 0; display:flex; align-items:center; gap:0.3rem;
+      font-size:clamp(0.9rem,2.5vw,1rem); white-space:nowrap; min-height:44px;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .nav-dropdown-trigger:hover { color:var(--secondary); }
+    .nav-dropdown-trigger .arrow { font-size:.65rem; transition:transform .3s; }
+    .nav-dropdown.active .nav-dropdown-trigger .arrow { transform:rotate(180deg); }
+    .nav-dropdown-menu {
+      position:absolute; top:calc(100% + 8px); left:50%;
+      transform: translateX(-50%) translateY(-4px);
+      background:white; border-radius:14px;
+      box-shadow:0 16px 40px -10px rgba(0,0,0,0.2);
+      min-width:220px; max-width:90vw;
+      opacity:0; visibility:hidden;
+      transition:opacity .2s, visibility .2s, transform .2s;
+      z-index:1000; border:1px solid var(--gray-200); padding:.5rem;
+    }
+    .nav-dropdown.active .nav-dropdown-menu {
+      opacity:1; visibility:visible; transform: translateX(-50%) translateY(0);
+    }
+    @media(max-width:767px){
+      .nav-dropdown { width:100%; }
+      .nav-dropdown-trigger { width:100%; padding:.75rem 0; border-bottom:1px solid var(--gray-100); font-size:1rem; }
+      .nav-dropdown-menu { position:static; transform:none; opacity:1; visibility:visible; box-shadow:none; border:none; border-radius:0; padding:0 0 0 1rem; display:none; }
+      .nav-dropdown.active .nav-dropdown-menu { display:block; transform:none; }
+    }
+    .nav-dropdown-item {
+      padding:.75rem 1rem; border-radius:10px; display:flex;
+      align-items:center; gap:.75rem; text-decoration:none; color:inherit;
+      transition:background .15s; -webkit-tap-highlight-color:transparent;
+    }
+    .nav-dropdown-item:hover { background:#f0f9f6; }
+    .nav-dropdown-icon { font-size:1.25rem; }
+    .nav-dropdown-content h4 { font-size:.9rem; color:var(--primary); margin-bottom:.1rem; }
+    .nav-dropdown-content p { font-size:.72rem; color:var(--gray-600); margin:0; }
+
+    /* ── HERO ── */
+    .hero {
+      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color:white;
+      padding:clamp(2.5rem,7vw,5rem) clamp(1.5rem,5vw,4rem);
+    }
+    .hero-title {
+      font-size:clamp(1.8rem,6vw,3.5rem);
+      font-weight:700; line-height:1.2; margin-bottom:1rem;
+    }
+    .hero-title span { color:var(--accent); display:block; font-size:clamp(1.2rem,4vw,2.5rem); margin-top:.4rem; }
+    .hero-desc {
+      font-size:clamp(0.9rem,2.5vw,1.15rem); line-height:1.7; color:#e2e8f0;
+      max-width:780px; margin-bottom:1.5rem;
+      padding:1.1rem 1.25rem; background:rgba(255,255,255,.06);
+      border-radius:16px; border-left:4px solid var(--accent);
+    }
+    .hero-desc p { margin-bottom:.6rem; }
+    .hero-desc p:last-child { margin-bottom:0; }
+    .hero-stats { display:flex; gap:clamp(1rem,3vw,3rem); flex-wrap:wrap; margin-top:1.5rem; }
+    .stat-value { font-size:clamp(1.3rem,4vw,2rem); font-weight:700; color:var(--accent); }
+    .stat-label { color:#e2e8f0; font-size:clamp(.75rem,2vw,.95rem); }
+
+    /* ── SERVICES ── */
+    .services { padding:clamp(2rem,5vw,5rem) clamp(1.5rem,4vw,4rem); background:white; }
+    .section-header { text-align:center; margin-bottom:clamp(1.5rem,4vw,3.5rem); }
+    .section-header h2 { font-size:clamp(1.6rem,5vw,2.8rem); color:var(--primary); font-weight:700; margin-bottom:.5rem; }
+    .section-header p { color:var(--gray-600); font-size:clamp(.9rem,2.5vw,1.1rem); max-width:640px; margin:0 auto; }
+    .services-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap:clamp(1rem,3vw,2rem);
+    }
+    .service-card {
+      background:white; border-radius:20px;
+      padding:clamp(1.2rem,3vw,2rem); box-shadow:0 8px 24px -8px rgba(0,0,0,0.1);
+      border:1px solid var(--gray-200); transition:all .3s;
+      text-decoration:none; color:inherit; display:block;
+    }
+    .service-card:hover { transform:translateY(-3px); box-shadow:0 16px 40px -10px rgba(0,0,0,0.15); }
+    .card-icon { font-size:clamp(2rem,5vw,3rem); margin-bottom:1rem; }
+    .card-title { font-size:clamp(1.2rem,4vw,1.6rem); color:var(--primary); font-weight:700; margin-bottom:.6rem; }
+    .card-desc { color:var(--gray-600); font-size:clamp(.85rem,2.2vw,.95rem); line-height:1.6; margin-bottom:1rem; }
+    .card-price {
+      font-size:clamp(.95rem,2.5vw,1.1rem); font-weight:600; color:var(--secondary);
+      margin:0.75rem 0; padding:.6rem 0;
+      border-top:2px dashed var(--gray-200); border-bottom:2px dashed var(--gray-200);
+    }
+    .card-btn {
+      background:var(--primary); color:white; text-align:center;
+      padding:.7rem 1rem; border-radius:50px; font-weight:600; margin-top:1rem;
+      font-size:clamp(.85rem,2.2vw,.95rem); display:block;
+    }
+
+    /* ── ABOUT ── */
+    .about { padding:clamp(2rem,5vw,4rem) clamp(1.5rem,4vw,4rem); background:var(--gray-100); }
+    .about-inner { max-width:960px; margin:0 auto; text-align:center; }
+    .about h2 { font-size:clamp(1.6rem,5vw,2.4rem); color:var(--primary); margin-bottom:1.2rem; }
+    .about p { font-size:clamp(.9rem,2.5vw,1.1rem); color:var(--gray-800); line-height:1.7; margin-bottom:1.2rem; }
+    .about-stats { display:flex; justify-content:center; gap:clamp(1.5rem,5vw,4rem); flex-wrap:wrap; margin-top:2rem; }
+    .about-stat { text-align:center; flex:1 1 100px; }
+    .about-stat-num { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:700; color:var(--secondary); }
+    .about-stat-lbl { color:var(--gray-600); font-size:clamp(.7rem,2vw,.85rem); text-transform:uppercase; letter-spacing:1px; }
+
+    /* ── FOOTER ── */
+    .footer { background:var(--primary-dark); color:white; padding:clamp(2rem,5vw,3.5rem) clamp(1.5rem,5vw,4rem); text-align:center; }
+    .footer h2 { font-size:clamp(1.4rem,4vw,1.8rem); margin-bottom:.75rem; }
+    .footer-desc { font-size:clamp(.85rem,2.5vw,1rem); color:#e2e8f0; max-width:640px; margin:0 auto 1.25rem; line-height:1.7; }
+    .footer-contact { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .footer-contact a { color:var(--accent); text-decoration:none; font-size:clamp(.85rem,2.5vw,.95rem); min-height:44px; display:inline-flex; align-items:center; }
+    .footer-links { display:flex; justify-content:center; gap:.75rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+    .footer-links a { color:white; text-decoration:none; opacity:.75; font-size:.85rem; padding:.5rem .9rem; min-height:44px; display:inline-flex; align-items:center; background:rgba(255,255,255,.08); border-radius:50px; transition:opacity .2s, background .2s; }
+    .footer-links a:hover { opacity:1; background:rgba(255,255,255,.15); }
+    .footer-copy { font-size:.8rem; color:#94a3b8; margin-top:1rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,.1); }
+
+    button, a { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- NAV -->
+    <nav class="navbar">
+      <div class="logo">
+        <h1>SarvaTax</h1>
+        <h3>Driven by fresh thinking, backed by practical experience</h3>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button><!-- Update navigation links around line 94 -->
+<div class="nav-links" id="navLinks">
+  <a href="index.html" class="nav-link">Home</a>
+  <div class="nav-dropdown" id="filingDropdown">
+    <div class="nav-dropdown-trigger" id="filingTrigger">
+      Filing Services <span class="arrow">▼</span>
+    </div>
+    <div class="nav-dropdown-menu">
+      <a href="filing-services.html?service=itr" class="nav-dropdown-item">
+        <span class="nav-dropdown-icon">📊</span>
+        <div class="nav-dropdown-content"><h4>ITR Filing</h4><p>Income Tax Return</p></div>
+      </a>
+      <a href="filing-services.html?service=gst" class="nav-dropdown-item">
+        <span class="nav-dropdown-icon">📦</span>
+        <div class="nav-dropdown-content"><h4>GST Filing</h4><p>GST for businesses</p></div>
+      </a>
+    </div>
+  </div>
+  <a href="consulting.html" class="nav-link">Consulting</a>
+  <a href="about.html" class="nav-link">About Us</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+</div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1 class="hero-title">
+        Professional Tax Solutions
+        <span>For Individuals &amp; Businesses</span>
+      </h1>
+      <div class="hero-desc">
+        <p><strong>Expert tax professionals provide comprehensive services in GST, TDS and IT,</strong> focusing on compliance, strategic planning and litigation support.</p>
+        <p>Services include GST registration and filing, ITR computation and filing for individuals and corporates across different industries.</p>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-value">6+</div><div class="stat-label">Years Experience</div></div>
+        <div><div class="stat-value">500+</div><div class="stat-label">Clients Served</div></div>
+        <div><div class="stat-value">4.9★</div><div class="stat-label">Client Rating</div></div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="services">
+      <div class="section-header">
+        <h2>Our Services</h2>
+        <p>Comprehensive tax solutions tailored to your needs</p>
+      </div>
+      <div class="services-grid">
+        <a href="filing-services.html?service=itr" class="service-card">
+          <div class="card-icon">📊</div>
+          <h3 class="card-title">ITR Filing</h3>
+          <p class="card-desc">Fast &amp; accurate income tax returns for individuals, businesses, and professionals.</p>
+          <div class="card-price">Fees at 0.05% of Total Income</div>
+          <div class="card-btn">View Plans →</div>
+        </a>
+        <a href="filing-services.html?service=gst" class="service-card">
+          <div class="card-icon">📦</div>
+          <h3 class="card-title">GST Filing</h3>
+          <p class="card-desc">Complete GST compliance including registration, monthly/quarterly returns, and consulting.</p>
+          <div class="card-price">Starting ₹999/month</div>
+          <div class="card-btn">View Plans →</div>
+        </a>
+        <a href="consulting.html" class="service-card">
+          <div class="card-icon">⚙️</div>
+          <h3 class="card-title">Consulting Services</h3>
+          <p class="card-desc">Expert assistance with notices, TDS corrections, annual support, and portal help.</p>
+          <div class="card-price">Starting ₹299</div>
+          <div class="card-btn">View Plans →</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about">
+      <div class="about-inner">
+        <h2>Who We Are</h2>
+        <p>We are a team of young, skilled professionals committed to delivering high-quality financial and taxation services. Our expertise spans across income tax, GST, TDS, and corporate compliance.</p>
+        <p><strong>Our mission:</strong> To simplify taxation and provide strategic financial solutions that help our clients save money and stay compliant.</p>
+        <div class="about-stats">
+          <div class="about-stat"><div class="about-stat-num">400+</div><div class="about-stat-lbl">ITR Filed</div></div>
+          <div class="about-stat"><div class="about-stat-num">100+</div><div class="about-stat-lbl">GST Clients</div></div>
+          <div class="about-stat"><div class="about-stat-num">50+</div><div class="about-stat-lbl">Notices Handled</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <h2>SarvaTax</h2>
+      <p class="footer-desc">Driven by fresh thinking, backed by practical experience. We provide comprehensive financial and taxation services with accuracy, integrity, and professionalism.</p>
+      <!-- Line around 328 - Update the email link -->
+<div class="footer-contact">
+  <a href="mailto:nandeesh@sarvatax.com">📧 nandeesh@sarvatax.com</a>
+  <a href="tel:+918217726457">📞 82177 26457</a>
+</div><!-- Update footer links around line 328 -->
+<div class="footer-links">
+  <a href="index.html">Home</a>
+  <a href="filing-services.html?service=itr">ITR Filing</a>
+  <a href="filing-services.html?service=gst">GST Filing</a>
+  <a href="consulting.html">Consulting</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact</a>
+</div>
+      <p class="footer-copy">© 2026 SarvaTax. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Hamburger toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    // Dropdown – desktop hover / mobile tap
+    const dropdown = document.getElementById('filingDropdown');
+    const trigger  = document.getElementById('filingTrigger');
+    let hoverTimer;
+
+    dropdown.addEventListener('mouseenter', () => { clearTimeout(hoverTimer); dropdown.classList.add('active'); });
+    dropdown.addEventListener('mouseleave', () => { hoverTimer = setTimeout(() => dropdown.classList.remove('active'), 400); });
+
+    trigger.addEventListener('click', (e) => {
+      if (window.innerWidth <= 767) { e.stopPropagation(); dropdown.classList.toggle('active'); }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) dropdown.classList.remove('active');
+    });
+  </script>
+</body>
+</html>
