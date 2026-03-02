@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>SarvaTax · Consulting Services</title>
+  <link rel="icon" type="image/png" href="./icon.png">
+  <!-- ... rest of head ... -->
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 8px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    :root {
+      --primary: #0f2b3c;
+      --primary-dark: #0a1e2a;
+      --secondary: #2d7a6e;
+      --accent: #eab308;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: clamp(16px, 4vw, 36px);
+      box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    /* NAV */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      position: relative;
+    }
+
+    @media(min-width:1024px) {
+      .navbar {
+        padding: 1.4rem 4rem;
+      }
+    }
+
+    .logo h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--primary);
+      transition: color 0.3s;
+      line-height: 1.2;
+    }
+
+    .logo h1:hover {
+      color: var(--secondary);
+    }
+
+    .logo h3 {
+      font-size: clamp(0.65rem, 2vw, 0.85rem);
+      font-weight: 400;
+      color: var(--gray-600);
+      line-height: 1.4;
+      max-width: 260px;
+    }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    .nav-toggle.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    @media(max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* Nav links */
+    .nav-links {
+      display: flex;
+      gap: clamp(1rem, 2vw, 2.5rem);
+      align-items: center;
+    }
+
+    @media(max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.5rem 1.5rem;
+        gap: 0;
+        border-top: 1px solid var(--gray-200);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-weight: 500;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      padding: 0.6rem 0;
+      white-space: nowrap;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      transition: all .3s;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: width 0.3s;
+    }
+
+    .nav-link:hover:after {
+      width: 80%;
+    }
+
+    .nav-link:hover {
+      color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    @media(max-width: 768px) {
+      .nav-link {
+        width: 100%;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--gray-100);
+        font-size: 1rem;
+        white-space: normal;
+      }
+
+      .nav-link:hover {
+        transform: none;
+      }
+    }
+
+    /* Dropdown */
+    .nav-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .nav-dropdown-trigger {
+      color: var(--gray-600);
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.6rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      white-space: nowrap;
+      min-height: 44px;
+      -webkit-tap-highlight-color: transparent;
+      transition: all 0.3s;
+    }
+
+    .nav-dropdown-trigger:hover {
+      color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    .nav-dropdown-trigger .arrow {
+      font-size: 0.65rem;
+      transition: transform .3s;
+    }
+
+    .nav-dropdown.active .nav-dropdown-trigger .arrow {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.2);
+      min-width: 220px;
+      max-width: 90vw;
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s ease;
+      z-index: 1000;
+      border: 1px solid var(--gray-200);
+      padding: 0.5rem;
+    }
+
+    .nav-dropdown.active .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media(max-width: 768px) {
+      .nav-dropdown {
+        width: 100%;
+      }
+
+      .nav-dropdown-trigger {
+        width: 100%;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--gray-100);
+        font-size: 1rem;
+        white-space: normal;
+      }
+
+      .nav-dropdown-trigger:hover {
+        transform: none;
+      }
+
+      .nav-dropdown-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        padding: 0 0 0 1rem;
+        display: none;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .nav-dropdown.active .nav-dropdown-menu {
+        display: block;
+        transform: none;
+      }
+    }
+
+    .nav-dropdown-item {
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all .3s;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-item:hover {
+      background: #f0f9f6;
+      transform: translateX(5px);
+    }
+
+    .nav-dropdown-icon {
+      font-size: 1.25rem;
+      transition: transform 0.3s;
+    }
+
+    .nav-dropdown-item:hover .nav-dropdown-icon {
+      transform: scale(1.1);
+    }
+
+    .nav-dropdown-content h4 {
+      font-size: 0.9rem;
+      color: var(--primary);
+      margin-bottom: 0.1rem;
+    }
+
+    .nav-dropdown-content p {
+      font-size: 0.72rem;
+      color: var(--gray-600);
+      margin: 0;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2"/><path d="M20,0 L20,100 M40,0 L40,100 M60,0 L60,100 M80,0 L80,100 M0,20 L100,20 M0,40 L100,40 M0,60 L100,60 M0,80 L100,80" stroke="rgba(255,255,255,0.02)" stroke-width="1"/></svg>');
+      opacity: 0.5;
+      animation: slide 20s linear infinite;
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50px);
+      }
+    }
+
+    .page-header h1 {
+      font-size: clamp(1.8rem, 6vw, 3.2rem);
+      margin-bottom: 0.4rem;
+      animation: fadeInUp 0.8s ease;
+      position: relative;
+    }
+
+    .page-header p {
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      color: #cbd5e1;
+      animation: fadeInUp 0.8s ease 0.2s both;
+      position: relative;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      color: #67e8f9;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      min-height: 44px;
+      transition: all 0.3s;
+      position: relative;
+      padding-left: 0;
+    }
+
+    .back-link:hover {
+      padding-left: 10px;
+      color: white;
+    }
+
+    /* CONTENT */
+    .content {
+      padding: clamp(1.2rem, 4vw, 3.5rem);
+    }
+
+    .section-title {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--secondary);
+      position: relative;
+    }
+
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--accent);
+      animation: expandWidth 1s ease;
+    }
+
+    @keyframes expandWidth {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 50px;
+      }
+    }
+
+    /* PLAN CARDS */
+    .plans-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .plan-card {
+      background: white;
+      border: 2px solid var(--gray-200);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: all 0.3s;
+      animation: fadeInUp 0.6s ease;
+      animation-fill-mode: both;
+    }
+
+    .plan-card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .plan-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .plan-card:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .plan-card:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .plan-card:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .plan-card:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    .plan-card:nth-child(7) {
+      animation-delay: 0.7s;
+    }
+
+    .plan-card:nth-child(8) {
+      animation-delay: 0.8s;
+    }
+
+    .plan-card:hover {
+      box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.2);
+      transform: translateY(-3px);
+      border-color: var(--secondary);
+    }
+
+    .plan-header {
+      padding: 1.1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      background: white;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 72px;
+    }
+
+    .plan-card.active .plan-header {
+      border-bottom-color: var(--secondary);
+      background: #f8fafc;
+    }
+
+    .plan-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .plan-icon {
+      font-size: 1.6rem;
+      width: 50px;
+      height: 50px;
+      background: var(--gray-100);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .plan-card:hover .plan-icon {
+      background: var(--secondary);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .plan-info {
+      min-width: 0;
+    }
+
+    .plan-info h3 {
+      font-size: clamp(0.95rem, 3.5vw, 1.35rem);
+      color: var(--primary);
+      font-weight: 700;
+      line-height: 1.3;
+      transition: color 0.3s;
+    }
+
+    .plan-card:hover .plan-info h3 {
+      color: var(--secondary);
+    }
+
+    .plan-info p {
+      color: var(--gray-600);
+      font-size: clamp(0.75rem, 2.5vw, 0.88rem);
+      margin-top: 0.15rem;
+    }
+
+    .plan-price {
+      font-size: clamp(0.85rem, 3vw, 1.05rem);
+      font-weight: 700;
+      color: var(--secondary);
+      background: rgba(45, 122, 110, 0.08);
+      padding: 0.3rem 0.7rem;
+      border-radius: 50px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.3s;
+    }
+
+    .plan-card:hover .plan-price {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .dropdown-icon {
+      font-size: 0.9rem;
+      color: var(--secondary);
+      transition: all 0.3s;
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-100);
+      border-radius: 50%;
+    }
+
+    .plan-card.active .dropdown-icon {
+      transform: rotate(180deg);
+      background: var(--secondary);
+      color: white;
+    }
+
+    .plan-form {
+      display: none;
+      padding: 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid var(--gray-200);
+      animation: slideDown 0.25s ease;
+    }
+
+    .plan-card.active .plan-form {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* FORMS */
+    .simple-form {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      color: var(--gray-800);
+      background: white;
+      transition: all 0.3s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 122, 110, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .submit-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.9rem 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 0.75rem;
+      transition: all 0.3s;
+      min-height: 52px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .submit-btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      z-index: 0;
+    }
+
+    .submit-btn:hover:before {
+      transform: translateX(0);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .submit-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .submit-btn:disabled {
+      background: var(--gray-600);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .success-message {
+      background: #10b981;
+      color: white;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* FOOTER */
+    .footer {
+      background: var(--primary-dark);
+      color: white;
+      padding: clamp(2rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 4rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary), var(--accent), var(--secondary));
+      background-size: 200% 100%;
+      animation: gradientMove 3s linear infinite;
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 0%;
+      }
+
+      100% {
+        background-position: 200% 0%;
+      }
+    }
+
+    .footer h2 {
+      font-size: clamp(1.4rem, 4vw, 1.8rem);
+      margin-bottom: 0.75rem;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .footer-desc {
+      font-size: clamp(0.85rem, 2.5vw, 1rem);
+      color: #e2e8f0;
+      max-width: 640px;
+      margin: 0 auto 1.25rem;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s ease 0.2s both;
+      padding: 0 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.75;
+      font-size: clamp(0.8rem, 2vw, 0.85rem);
+      padding: 0.5rem 0.9rem;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, .08);
+      border-radius: 50px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      background: rgba(255, 255, 255, .15);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-contact {
+      margin: 1rem 0;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+
+    .footer-contact a {
+      color: #eab308;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+    }
+
+    .footer-contact a:hover {
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    .footer p {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      animation: fadeInUp 0.8s ease 0.8s both;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar">
+      <div class="logo">
+        <h1>SarvaTax</h1>
+        <h3>Driven by fresh thinking, backed by practical experience</h3>
+      </div>
+      <button class="nav-toggle" id="navToggle"
+        aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-dropdown" id="filingDropdown">
+          <div class="nav-dropdown-trigger" id="filingTrigger">Filing Services <span class="arrow">▼</span></div>
+          <div class="nav-dropdown-menu">
+            <a href="filing-services.html?service=itr" class="nav-dropdown-item"><span
+                class="nav-dropdown-icon">📊</span>
+              <div class="nav-dropdown-content">
+                <h4>ITR Filing</h4>
+                <p>Income Tax Return</p>
+              </div>
+            </a>
+            <a href="filing-services.html?service=gst" class="nav-dropdown-item"><span
+                class="nav-dropdown-icon">📦</span>
+              <div class="nav-dropdown-content">
+                <h4>GST Filing</h4>
+                <p>GST for businesses</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <a href="consulting.html" class="nav-link">Consulting</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+    </nav>
+
+    <div class="page-header">
+      <a href="index.html" class="back-link">← Back to Home</a>
+      <h1>Consulting Services</h1>
+      <p>Expert consultation and registration services</p>
+    </div>
+
+    <div class="content">
+      <div class="plans-container">
+
+        <!-- Plan 1: Notices & Demand Handling -->
+        <div class="plan-card" id="s1">
+          <div class="plan-header" onclick="togglePlan('s1')">
+            <div class="plan-header-left">
+              <div class="plan-icon">📢</div>
+              <div class="plan-info">
+                <h3>Notices &amp; Demand Handling</h3>
+                <p>Expert handling of all tax notices</p>
+              </div>
+            </div>
+            <div class="plan-price">1% or ₹699 min</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="form-s1" class="ajax-form">
+                <input type="hidden" name="_subject" value="Consulting Request - Notices & Demand Handling">
+                <input type="hidden" name="_replyto" value="nandeesh@sarvatax.com">
+                <input type="hidden" name="Service Type" value="Notices & Demand Handling">
+
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" name="Full Name" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="Email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" name="Phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Type of Demand *</label>
+                  <select name="Type of Demand" required>
+                    <option value="">Select type</option>
+                    <option>Income Tax</option>
+                    <option>GST</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Brief Description</label>
+                  <input type="text" name="Description" placeholder="Brief description of the notice">
+                </div>
+                <button type="submit" class="submit-btn"><span>Submit Request</span></button>
+              </form>
+              <div id="success-s1" class="success-message">✓ Request submitted! We'll contact you within 4 hours.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 2: TDS / AIS Correction -->
+        <div class="plan-card" id="s2">
+          <div class="plan-header" onclick="togglePlan('s2')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🔄</div>
+              <div class="plan-info">
+                <h3>TDS / AIS Correction</h3>
+                <p>Fix TDS mismatches, AIS discrepancies</p>
+              </div>
+            </div>
+            <div class="plan-price">₹499</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="form-s2" class="ajax-form">
+                <input type="hidden" name="_subject" value="Consulting Request - TDS / AIS Correction">
+                <input type="hidden" name="_replyto" value="nandeesh@sarvatax.com">
+                <input type="hidden" name="Service Type" value="TDS / AIS Correction">
+
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" name="Full Name" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="Email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" name="Phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>PAN Number *</label>
+                  <input type="text" name="PAN" placeholder="ABCDE1234F" required>
+                </div>
+                <div class="form-group">
+                  <label>Issue Type *</label>
+                  <select name="Issue Type" required>
+                    <option value="">Select issue type</option>
+                    <option>TDS Mismatch</option>
+                    <option>AIS Discrepancy</option>
+                    <option>Form 26AS Correction</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn"><span>Submit Request</span></button>
+              </form>
+              <div id="success-s2" class="success-message">✓ Request submitted! We'll contact you within 4 hours.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 3: Annual Support Plan -->
+        <div class="plan-card" id="s3">
+          <div class="plan-header" onclick="togglePlan('s3')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🌟</div>
+              <div class="plan-info">
+                <h3>Annual Support Plan</h3>
+                <p>Unlimited queries + 1 free ITR filing</p>
+              </div>
+            </div>
+            <div class="plan-price">₹4,999</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="form-s3" class="ajax-form">
+                <input type="hidden" name="_subject" value="Consulting Request - Annual Support Plan">
+                <input type="hidden" name="_replyto" value="nandeesh@sarvatax.com">
+                <input type="hidden" name="Service Type" value="Annual Support Plan">
+
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" name="Full Name" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="Email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" name="Phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Plan Duration *</label>
+                  <select name="Plan Duration" required>
+                    <option value="">Select plan</option>
+                    <option value="1 Year - ₹4,999">1 Year – ₹4,999</option>
+                    <option value="2 Years - ₹8,999">2 Years – ₹8,999</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn"><span>Subscribe Now</span></button>
+              </form>
+              <div id="success-s3" class="success-message">✓ Subscription confirmed! We'll contact you within 4 hours.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 4: Portal Assistance -->
+        <div class="plan-card" id="s4">
+          <div class="plan-header" onclick="togglePlan('s4')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🔧</div>
+              <div class="plan-info">
+                <h3>Portal Assistance</h3>
+                <p>IT or GST portal help</p>
+              </div>
+            </div>
+            <div class="plan-price">₹299</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="form-s4" class="ajax-form">
+                <input type="hidden" name="_subject" value="Consulting Request - Portal Assistance">
+                <input type="hidden" name="_replyto" value="nandeesh@sarvatax.com">
+                <input type="hidden" name="Service Type" value="Portal Assistance">
+
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" name="Full Name" placeholder="Full name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="Email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" name="Phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Portal Type *</label>
+                  <select name="Portal Type" required>
+                    <option value="">Select type</option>
+                    <option>Income Tax Portal</option>
+                    <option>GST Portal</option>
+                    <option>MCA Portal</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn"><span>Get Assistance</span></button>
+              </form>
+              <div id="success-s4" class="success-message">✓ Request submitted! We'll contact you within 4 hours.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 5: Startup MSME Kit -->
+        <div class="plan-card" id="s5">
+          <div class="plan-header" onclick="togglePlan('s5')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🚀</div>
+              <div class="plan-info">
+                <h3>Startup MSME Kit</h3>
+                <p>MSME registration, Udyam certificate</p>
+              </div>
+            </div>
+            <div class="plan-price">₹1,999</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="form-s5" class="ajax-form">
+                <input type="hidden" name="_subject" value="Consulting Request - Startup MSME Kit">
+                <input type="hidden" name="_replyto" value="nandeesh@sarvatax.com">
+                <input type="hidden" name="Service Type" value="Startup MSME Kit">
+
+                <div class="form-group">
+                  <label>Full Name / Business Name *</label>
+                  <input type="text" name="Business Name" placeholder="Name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="Email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" name="Phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Business Type *</label>
+                  <select name="Business Type" required>
+                    <option value="">Select type</option>
+                    <option>Proprietorship</option>
+                    <option>Partnership</option>
+                    <option>Private Limited</option>
+                    <option>LLP</option>
+                    <option>Not Registered Yet</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Services Required *</label>
+                  <select name="Services Required" required>
+                    <option value="">Select services</option>
+                    <option>MSME/Udyam Registration (₹499)</option>
+                    <option>Startup India Registration (₹799)</option>
+                    <option>Both (₹999)</option>
+                    <option>Company Incorporation (₹29,999)</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn"><span>Get MSME Kit</span></button>
+              </form>
+              <div id="success-s5" class="success-message">✓ Request submitted! Startup expert will contact you within 4
+                hours.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 6: Trust Registration -->
+        <div class="plan-card" id="s6">
+          <div class="plan-header" onclick="togglePlan('s6')">
+            <div class="plan-header-left">
+              <div class="plan-icon">🏛️</div>
+              <div class="plan-info">
+                <h3>Trust Registration</h3>
+                <p>Public/Private Trust registration & compliance</p>
+              </div>
+            </div>
+            <div class="plan-price">₹4,999</div>
+            <div class="dropdown-icon">▼</div>
+          </div>
+          <div class="plan-form">
+            <div class="simple-form">
+              <form id="form-s6" class="ajax-form">
+                <input type="hidden" name="_subject" value="Consulting Request - Trust Registration">
+                <input type="hidden" name="_replyto" value="nandeesh@sarvatax.com">
+                <input type="hidden" name="Service Type" value="Trust Registration">
+
+                <div class="form-group">
+                  <label>Trust Name *</label>
+                  <input type="text" name="Trust Name" placeholder="Enter proposed trust name" required>
+                </div>
+                <div class="form-group">
+                  <label>Contact Person Name *</label>
+                  <input type="text" name="Contact Person" placeholder="Full name of trustee" required>
+                </div>
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="Email" placeholder="you@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone *</label>
+                  <input type="tel" name="Phone" placeholder="98765 43210" required>
+                </div>
+                <div class="form-group">
+                  <label>Registration Type *</label>
+                  <select name="Trust Type" required>
+                    <option value="">Select type</option>
+                    <option>HUF Registration</option>
+                    <option>Trust Registration</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+                <button type="submit" class="submit-btn"><span>Submit Request</span></button>
+              </form>
+              <div id="success-s6" class="success-message">✓ Registration request submitted! Expert will contact you
+                within 4 hours.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-links">
+        <a href="index.html">Home</a><a href="filing-services.html?service=itr">ITR Filing</a>
+        <a href="filing-services.html?service=gst">GST Filing</a><a href="consulting.html">Consulting</a><a
+          href="about.html">About Us</a><a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-contact">
+        <a href="mailto:nandeesh@sarvatax.com">📧 nandeesh@sarvatax.com</a>
+        <span style="color: #94a3b8; margin: 0 0.5rem;">|</span>
+        <a href="tel:+918217726457">📞 82177 26457</a>
+      </div>
+      <p>© 2026 SarvaTax. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Hamburger menu toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+
+    // Dropdown menu
+    const dd = document.getElementById('filingDropdown');
+    const tr = document.getElementById('filingTrigger');
+    let ht;
+
+    dd.addEventListener('mouseenter', () => { clearTimeout(ht); dd.classList.add('active'); });
+    dd.addEventListener('mouseleave', () => { ht = setTimeout(() => dd.classList.remove('active'), 400); });
+    tr.addEventListener('click', e => { if (window.innerWidth <= 768) { e.stopPropagation(); dd.classList.toggle('active'); } });
+    document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('active'); });
+
+    // Close mobile menu when clicking a link
+    const navLinks_list = document.querySelectorAll('.nav-link, .nav-dropdown-item');
+    navLinks_list.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navToggle.classList.remove('open');
+          navLinks.classList.remove('open');
+        }
+      });
+    });
+
+    // Toggle plan cards
+    function togglePlan(id) {
+      const card = document.getElementById(id);
+      if (!card) return;
+      const wasActive = card.classList.contains('active');
+      document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active'));
+      if (!wasActive) {
+        card.classList.add('active');
+        if (window.innerWidth <= 768) {
+          setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
+        }
+      }
+    }
+
+    // AJAX Form Submission
+    async function submitFormAjax(formElement, successMessageId) {
+      const formData = new FormData(formElement);
+      const submitBtn = formElement.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('https://formspree.io/f/xeeldqab', {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          const successMsg = document.getElementById(successMessageId);
+          if (successMsg) {
+            successMsg.style.display = 'block';
+            formElement.reset();
+            setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+          }
+          return true;
+        } else {
+          alert('Submission failed. Please try again.');
+          return false;
+        }
+      } catch (error) {
+        alert('Submission failed. Please check your connection.');
+        return false;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    // Attach event listeners to all forms
+    document.addEventListener('DOMContentLoaded', function () {
+      for (let i = 1; i <= 6; i++) {
+        const form = document.getElementById('form-s' + i);
+        const successId = 'success-s' + i;
+        if (form) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            submitFormAjax(this, successId);
+          });
+        }
+      }
+    });
+
+    // Intersection Observer for scroll animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.plan-card, .page-header h1, .page-header p, .section-title, .footer h2, .footer-links, .footer-contact, .footer p').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Touch-friendly hover effects for mobile
+    if ('ontouchstart' in window) {
+      document.querySelectorAll('.plan-card, .nav-link, .nav-dropdown-trigger, .footer-links a, .footer-contact a').forEach(el => {
+        el.addEventListener('touchstart', function () { this.style.transform = 'translateY(-3px)'; });
+        el.addEventListener('touchend', function () { this.style.transform = 'translateY(0)'; });
+      });
+    }
+  </script>
+</body>
+
+</html>
